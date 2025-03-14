@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { FaInfoCircle } from 'react-icons/fa'; // Assuming you have this icon
 
 const BudgetCalculator = () => {
   const [budgetData, setBudgetData] = useState({
@@ -112,7 +111,7 @@ const BudgetCalculator = () => {
                   step="100"
                 />
               </td>
-              <td className="border p-4 flex items-center justify-center" title="Click the calendar icon to select a date">
+              <td className="border p-4">
                 <input
                   type="date"
                   name="currentEndDate"
@@ -120,7 +119,6 @@ const BudgetCalculator = () => {
                   onChange={(e) => handleDateChange('currentEndDate', e.target.value)}
                   className="p-2 bg-gray-200 rounded w-full"
                 />
-                <FaInfoCircle className="ml-2 inline text-blue-500" />
               </td>
               <td className="border p-4 text-right font-semibold">
                 ${budgetData.currentDailyBudget.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -135,7 +133,7 @@ const BudgetCalculator = () => {
                   step="100"
                 />
               </td>
-              <td className="border p-4 flex items-center justify-center" title="Click the calendar icon to select a date">
+              <td className="border p-4">
                 <input
                   type="date"
                   name="newEndDate"
@@ -143,7 +141,6 @@ const BudgetCalculator = () => {
                   onChange={(e) => handleDateChange('newEndDate', e.target.value)}
                   className="p-2 bg-gray-200 rounded w-full"
                 />
-                <FaInfoCircle className="ml-2 inline text-blue-500" />
               </td>
               <td className="border p-4 text-right font-semibold">
                 ${budgetData.newLifetimeBudget.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
