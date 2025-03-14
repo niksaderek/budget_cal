@@ -154,7 +154,7 @@ const BudgetCalculator = () => {
       </div>
 
       <div className="mt-6 text-sm text-gray-600">
-        <p>Input the amount in the gray fields.</p>
+        <p>Enter the amount in the gray fields and choose the end dates.</p>
       </div>
     </div>
   );
