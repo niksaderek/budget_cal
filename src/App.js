@@ -154,7 +154,7 @@ const BudgetCalculator = () => {
       </div>
 
       <div className="mt-6 text-sm text-gray-600">
-        <p>Input the amount in the gray fields. Bolded fields are calculated automatically.</p>
+        <p>Input the amount in the gray fields.</p>
       </div>
     </div>
   );
