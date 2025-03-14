@@ -3,20 +3,20 @@ import { FaInfoCircle } from 'react-icons/fa'; // Assuming you have this icon
 
 const BudgetCalculator = () => {
   const [budgetData, setBudgetData] = useState({
-    currentLifetimeBudget: 25000.00,
-    currentSpend: 5000.00,
-    currentEndDate: "3/23/2025",
-    currentDailyBudget: 2000.00,
-    newDailyBudget: 1500.00,
-    newEndDate: "3/27/2025",
-    newLifetimeBudget: 26000.00,
-    changeInLTBudget: 4.00
+    currentLifetimeBudget: '',
+    currentSpend: '',
+    currentEndDate: '',
+    currentDailyBudget: '',
+    newDailyBudget: '',
+    newEndDate: '',
+    newLifetimeBudget: '',
+    changeInLTBudget: ''
   });
 
   const calculateValues = (data) => {
     const updatedData = { ...data };
 
-    if (data.currentLifetimeBudget !== undefined && data.currentSpend !== undefined && data.currentEndDate !== undefined) {
+    if (data.currentLifetimeBudget !== '' && data.currentSpend !== '' && data.currentEndDate !== '') {
       const currentDate = new Date();
       const endDate = new Date(data.currentEndDate);
       const daysRemaining = Math.ceil((endDate - currentDate) / (1000 * 60 * 60 * 24));
@@ -27,7 +27,7 @@ const BudgetCalculator = () => {
       }
     }
 
-    if (data.currentSpend !== undefined && data.newDailyBudget !== undefined && data.newEndDate !== undefined) {
+    if (data.currentSpend !== '' && data.newDailyBudget !== '' && data.newEndDate !== '') {
       const currentDate = new Date();
       const endDate = new Date(data.newEndDate);
       const daysRemaining = Math.ceil((endDate - currentDate) / (1000 * 60 * 60 * 24));
@@ -48,7 +48,7 @@ const BudgetCalculator = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const newValue = name === 'currentEndDate' || name === 'newEndDate' ? value : parseFloat(value) || 0;
+    const newValue = name === 'currentEndDate' || name === 'newEndDate' ? value : parseFloat(value) || '';
     
     const updatedData = { ...budgetData, [name]: newValue };
     setBudgetData(calculateValues(updatedData));
@@ -99,7 +99,7 @@ const BudgetCalculator = () => {
                   value={budgetData.currentLifetimeBudget}
                   onChange={handleInputChange}
                   className="p-2 bg-gray-200 rounded w-full"
-                  step="0.01"
+                  step="100"
                 />
               </td>
               <td className="border p-4">
@@ -112,7 +112,7 @@ const BudgetCalculator = () => {
                   step="100"
                 />
               </td>
-              <td className="border p-4" title="Click the calendar icon to select a date">
+              <td className="border p-4 flex items-center justify-center" title="Click the calendar icon to select a date">
                 <input
                   type="date"
                   name="currentEndDate"
@@ -135,7 +135,7 @@ const BudgetCalculator = () => {
                   step="100"
                 />
               </td>
-              <td className="border p-4" title="Click the calendar icon to select a date">
+              <td className="border p-4 flex items-center justify-center" title="Click the calendar icon to select a date">
                 <input
                   type="date"
                   name="newEndDate"
