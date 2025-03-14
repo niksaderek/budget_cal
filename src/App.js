@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 const BudgetCalculator = () => {
   const [budgetData, setBudgetData] = useState({
     currentLifetimeBudget: 25000.00,
