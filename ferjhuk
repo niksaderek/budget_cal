@@ -1,0 +1,238 @@
+[33mcommit 6c27bc5112c41b963e07652d972bcaf2f0007985[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 17:53:25 2025 +0100
+
+    Update index.js
+
+[33mcommit 22bcf8d6ed9749fe8d299ec5e0dea85cbedc5ea3[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 17:50:06 2025 +0100
+
+    Update vite.config.js
+
+[33mcommit 2af9c2a1498b4dfe8bde95a626c0caa91bbff9d4[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 17:46:55 2025 +0100
+
+    Update index.js
+
+[33mcommit 190fde093e4e9701f894161c22d0ce1eb8fd3f4a[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 17:43:12 2025 +0100
+
+    Create vite.config.js
+
+[33mcommit 70155daa23200bcb96fb851d6606e5fcde77d59b[m
+Merge: f7decfd 77ef7ca
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 17:41:55 2025 +0100
+
+    Merge pull request #1 from niksaderek/budget_cal-patch-1
+    
+    Update package.json
+
+[33mcommit 77ef7ca6b6ac311dbcbf2fa8880643627a1abeea[m[33m ([m[1;31morigin/budget_cal-patch-1[m[33m)[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 17:41:07 2025 +0100
+
+    Update package.json
+
+[33mcommit f7decfdf0f304a4f019fa87751eaefd10d4773f2[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 17:21:17 2025 +0100
+
+    Update App.js
+
+[33mcommit de88b721b811992f238b897456ac0ecbd19604fb[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 17:18:03 2025 +0100
+
+    Update App.js
+
+[33mcommit 4628885e7c63e7f298a8059d961d1c7463822cbc[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 17:12:17 2025 +0100
+
+    Update App.js
+
+[33mcommit 1f4661bdc9ec9da5e1f290d6ec0564f9dec0a02a[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 17:07:18 2025 +0100
+
+    Update App.js
+
+[33mcommit aae08c4469fd2dc343efdad8f1f84738816b66c1[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 16:58:09 2025 +0100
+
+    Update App.js
+
+[33mcommit 0fd505be20f6a6e1ba3b0c026446aed6e3e24676[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 16:47:38 2025 +0100
+
+    Update App.js
+
+[33mcommit 58748b144c93abcd168be08677e329ffb3415357[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 16:42:59 2025 +0100
+
+    Update App.js
+
+[33mcommit 10f696c20dd250f03459648e211fdb19e175a372[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 16:38:58 2025 +0100
+
+    Update App.js
+
+[33mcommit cce743d7ab027f7398e8f92202a87b5584dd1c53[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 16:35:11 2025 +0100
+
+    Update App.js
+
+[33mcommit 972a45cc98ece478bafc80514a96f806d179c4d6[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 16:32:16 2025 +0100
+
+    Update App.js
+
+[33mcommit d12ec7a2d43a514c48c74e25738defb76fcaac21[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 16:27:54 2025 +0100
+
+    Update App.js
+
+[33mcommit 26dabf58de509854521fbc0f0b9ec7592c81f15e[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 16:23:57 2025 +0100
+
+    Update App.js
+
+[33mcommit 811b4dc3f502880bc3497025c4377cabe1c1c988[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Mon Mar 17 16:18:05 2025 +0100
+
+    Update App.js
+
+[33mcommit 3c062520e42ec59989acaa29b0883b093b3f1783[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 03:01:40 2025 +0100
+
+    Update index.html
+
+[33mcommit 30ebfad8a460b282cf66b850e4b49851bfc83c30[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 02:52:57 2025 +0100
+
+    Update index.html
+
+[33mcommit a4b1b05b0235cbb122308700c3557bf64308f7b7[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 02:50:55 2025 +0100
+
+    Add files via upload
+
+[33mcommit 9e1daf2a21346176e3a50a50640f5de451fe934a[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 02:50:29 2025 +0100
+
+    Update index.html
+
+[33mcommit 791291e1825840780bb195a01405a6d65764faa0[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 02:41:11 2025 +0100
+
+    Update App.js
+
+[33mcommit babe3f96a87c8e7cbe9a734b90d3c28d649917e3[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 02:34:39 2025 +0100
+
+    Update App.js
+
+[33mcommit 9028c310936705eb9c34f4064cd5f8aa6c964f0d[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 02:29:34 2025 +0100
+
+    Update App.js
+
+[33mcommit 7983ebcf3aeb9f86737002242d6d54eab981a41d[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 02:24:24 2025 +0100
+
+    Update App.js
+
+[33mcommit 09131ce55a62363d92d419729e1257a79f25203a[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 02:20:08 2025 +0100
+
+    Update App.js
+
+[33mcommit 1f6ef11c90f3f32cf59b6bc54b5f9422f0f99f7c[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 02:16:50 2025 +0100
+
+    Update package.json
+
+[33mcommit 11fac1a0bc70c2913c31b89bf841f7db11363b26[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 02:12:06 2025 +0100
+
+    Update App.js
+    
+    dodane nove funkcionalnosti
+
+[33mcommit 7f4833d5d1f049514ed9b2a06c99269ab77d0e9a[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 02:05:19 2025 +0100
+
+    Update App.js
+
+[33mcommit cfc39e72843005f6febd21bd4ca937080f981d07[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 02:01:31 2025 +0100
+
+    Update App.js
+
+[33mcommit e438ef9ba4dcbfc439571a5a5ef5f98e6170d1ff[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 01:59:42 2025 +0100
+
+    Update App.js
+
+[33mcommit 648b421fd5456ba0e5f399a7a56f59815050c76f[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 01:56:54 2025 +0100
+
+    Delete .nvmrc
+
+[33mcommit 9e9d03625033b3c1d820dae77d3606ee3b0d3f59[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 01:52:03 2025 +0100
+
+    .nvmrc
+
+[33mcommit ce081ea6dd551c7b6ec79f1c8e9af6f00808c0be[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 01:43:58 2025 +0100
+
+    Add files via upload
+
+[33mcommit f52a8c4df2f0a060c6242b11aace74bb6e6971d9[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 01:41:34 2025 +0100
+
+    Add files via upload
+
+[33mcommit e8013443d25fd84b4bbb0c8b778c2dfc8aaee8f8[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Fri Mar 14 01:33:46 2025 +0100
+
+    Delete library
+
+[33mcommit 01efb4e795e64e9990e8cd6eb4a84b30443048c6[m
+Author: nick <niksa.derek@gmail.com>
+Date:   Thu Mar 13 23:20:09 2025 +0100
+
+    Create library
