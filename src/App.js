@@ -295,7 +295,7 @@ const BudgetCalculator = () => {
 
   return (
     <div className="mx-auto p-4 bg-white rounded-lg shadow-lg" style={{ maxWidth: '500px', width: '100%' }}>
-      <h1 className="text-2xl md:text-3xl font-bold text-center mb-2" style={{ color: '#2563EB' }}>Daily & Lifetime Budget Calculator</h1>
+      <h1 className="text-2xl md:text-3xl font-bold text-center mb-2" style={{ color: '#000000' }}>Daily & Lifetime Budget Calculator</h1>
       
       {/* Templates */}
       <div className="mb-6">
