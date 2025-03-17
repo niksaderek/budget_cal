@@ -1,11 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css'; // Optional, for styles
-import App from './App'; // Your main app component
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import BudgetCalculator from './BudgetCalculator'
+import './index.css'
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <div className="container mx-auto p-4">
+      <BudgetCalculator />
+    </div>
   </React.StrictMode>,
-  document.getElementById('root')
-);
+)
