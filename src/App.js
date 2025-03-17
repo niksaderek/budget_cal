@@ -174,12 +174,12 @@ const BudgetCalculator = () => {
         : 0;
     }
 
-    if (data.currentSpend && data.newDailyBudget && data.newEndDate) {
+    if (data.newDailyBudget && data.newEndDate) {
       const endDate = new Date(data.newEndDate);
       const daysRemaining = calculateWeekdays(today, endDate);
       
       updatedData.newLifetimeBudget = daysRemaining > 0
-        ? Number(data.currentSpend) + (Number(data.newDailyBudget) * daysRemaining)
+        ? Number(data.currentSpend || 0) + (Number(data.newDailyBudget) * daysRemaining)
         : 0;
     }
 
