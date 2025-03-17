@@ -194,7 +194,7 @@ const BudgetCalculator = () => {
         </div>
       </div>
       
-      <div className="text-center mt-4 text-xs text-gray-400">
+      <div className="text-center mt-4 text-xs text-gray-400 italic">
         Note: Budget calculations are based on weekdays only (Monday-Friday)
       </div>
     </div>
