@@ -81,7 +81,7 @@ const BudgetCalculator = () => {
 
   return (
     <div className="mx-auto p-4 bg-white rounded-lg shadow-lg" style={{ maxWidth: '500px', width: '100%' }}>
-      <h1 className="text-xl md:text-2xl font-bold text-center mb-2" style={{ color: '#2563EB' }}>Daily & Lifetime Budget Calculator</h1>
+      <h1 className="text-2xl md:text-3xl font-bold text-center mb-2" style={{ color: '#2563EB' }}>Daily & Lifetime Budget Calculator</h1>
 
       <div className="space-y-5">
         {/* Current Budget Section */}
@@ -98,6 +98,7 @@ const BudgetCalculator = () => {
                 onChange={handleInputChange}
                 className="p-2 bg-white border border-gray-300 rounded w-full"
                 placeholder="Enter amount"
+                step="100"
               />
             </div>
             
@@ -110,6 +111,7 @@ const BudgetCalculator = () => {
                 onChange={handleInputChange}
                 className="p-2 bg-white border border-gray-300 rounded w-full"
                 placeholder="Enter amount"
+                step="100"
               />
             </div>
             
@@ -147,6 +149,7 @@ const BudgetCalculator = () => {
                 onChange={handleInputChange}
                 className="p-2 bg-white border border-gray-300 rounded w-full"
                 placeholder="Enter amount"
+                step="100"
               />
             </div>
             
@@ -191,7 +194,7 @@ const BudgetCalculator = () => {
         </div>
       </div>
       
-      <div className="text-center mt-4 text-xs text-gray-500">
+      <div className="text-center mt-4 text-xs text-gray-400">
         Note: Budget calculations are based on weekdays only (Monday-Friday)
       </div>
     </div>
