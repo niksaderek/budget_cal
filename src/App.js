@@ -5,22 +5,20 @@ const BudgetCalculator = () => {
     currentLifetimeBudget: '',
     currentSpend: '',
     currentEndDate: '',
-    currentDailyBudget: 0,  // Default to 0 to prevent NaN errors
+    currentDailyBudget: 0,
     newDailyBudget: '',
     newEndDate: '',
-    newLifetimeBudget: 0,  // Default to 0
-    changeInLTBudget: 0    // Default to 0
+    newLifetimeBudget: 0,
+    changeInLTBudget: 0
   });
 
-  const [countWeekdaysOnly, setCountWeekdaysOnly] = useState(true);
-
-  const calculateWorkingDays = (startDate, endDate, weekdaysOnly) => {
+  const calculateWorkingDays = (startDate, endDate) => {
     let count = 0;
     let currentDate = new Date(startDate);
 
     while (currentDate <= endDate) {
       const dayOfWeek = currentDate.getDay();
-      if (!weekdaysOnly || (dayOfWeek !== 0 && dayOfWeek !== 6)) {
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) {  // Only count weekdays
         count++;
       }
       currentDate.setDate(currentDate.getDate() + 1);
@@ -31,12 +29,11 @@ const BudgetCalculator = () => {
 
   const calculateValues = (data) => {
     const updatedData = { ...data };
-    const weekdaysOnly = countWeekdaysOnly;  // Ensure toggle updates calculations
 
     if (data.currentLifetimeBudget && data.currentSpend && data.currentEndDate) {
       const currentDate = new Date();
       const endDate = new Date(data.currentEndDate);
-      const daysRemaining = calculateWorkingDays(currentDate, endDate, weekdaysOnly);
+      const daysRemaining = calculateWorkingDays(currentDate, endDate);
 
       updatedData.currentDailyBudget = daysRemaining > 0
         ? (Number(data.currentLifetimeBudget) - Number(data.currentSpend)) / daysRemaining
@@ -46,7 +43,7 @@ const BudgetCalculator = () => {
     if (data.currentSpend && data.newDailyBudget && data.newEndDate) {
       const currentDate = new Date();
       const endDate = new Date(data.newEndDate);
-      const daysRemaining = calculateWorkingDays(currentDate, endDate, weekdaysOnly);
+      const daysRemaining = calculateWorkingDays(currentDate, endDate);
 
       updatedData.newLifetimeBudget = daysRemaining > 0
         ? Number(data.currentSpend) + (Number(data.newDailyBudget) * daysRemaining)
@@ -71,23 +68,9 @@ const BudgetCalculator = () => {
     setBudgetData((prevData) => calculateValues({ ...prevData, [name]: dateValue }));
   };
 
-  const toggleCountMode = () => {
-    setCountWeekdaysOnly((prev) => !prev);
-    setBudgetData((prevData) => calculateValues(prevData));  // Recalculate on toggle
-  };
-
   return (
     <div className="container mx-auto p-6 max-w-7xl bg-white rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">Daily & Lifetime Budget Calculator</h1>
-
-      <div className="flex justify-center mb-4">
-        <button
-          onClick={toggleCountMode}
-          className={`px-4 py-2 rounded text-white font-bold transition ${countWeekdaysOnly ? 'bg-blue-600' : 'bg-gray-600'}`}
-        >
-          {countWeekdaysOnly ? 'Switch to All Days' : 'Switch to Weekdays Only'}
-        </button>
-      </div>
+      <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">Daily & Lifetime Budget Calculator (Weekdays Only)</h1>
 
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse bg-gray-50 shadow-sm rounded-lg">
