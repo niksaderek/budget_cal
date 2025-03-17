@@ -299,7 +299,7 @@ const BudgetCalculator = () => {
       
       {/* Templates */}
       <div className="mb-6">
-        <h3 className="text-sm font-medium text-gray-700 mb-2">Quick Templates:</h3>
+        <h3 className="text-sm font-medium text-gray-700 mb-2 text-center">Quick Templates:</h3>
         <div className="flex flex-wrap gap-2 justify-center">
           {templates.map((template, index) => (
             <button
