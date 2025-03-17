@@ -296,12 +296,11 @@ const BudgetCalculator = () => {
   return (
     <div className="mx-auto p-4 bg-white rounded-lg shadow-lg" style={{ maxWidth: '500px', width: '100%' }}>
       <h1 className="text-2xl md:text-3xl font-bold text-center mb-2" style={{ color: '#2563EB' }}>Daily & Lifetime Budget Calculator</h1>
-      <p className="text-xs text-center mb-4 text-gray-500">(Weekdays Only)</p>
       
       {/* Templates */}
       <div className="mb-6">
         <h3 className="text-sm font-medium text-gray-700 mb-2">Quick Templates:</h3>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 justify-center">
           {templates.map((template, index) => (
             <button
               key={index}
