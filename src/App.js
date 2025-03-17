@@ -70,7 +70,7 @@ const BudgetCalculator = () => {
 
   return (
     <div className="container mx-auto p-6 max-w-7xl bg-white rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">Daily & Lifetime Budget Calculator (Weekdays Only)</h1>
+      <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">Daily & Lifetime Budget Calculator</h1>
 
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse bg-gray-50 shadow-sm rounded-lg">
@@ -94,6 +94,7 @@ const BudgetCalculator = () => {
                   name="currentLifetimeBudget"
                   value={budgetData.currentLifetimeBudget}
                   onChange={handleInputChange}
+                  step="100"
                   className="p-2 bg-gray-200 rounded w-full"
                 />
               </td>
@@ -103,6 +104,7 @@ const BudgetCalculator = () => {
                   name="currentSpend"
                   value={budgetData.currentSpend}
                   onChange={handleInputChange}
+                  step="100"
                   className="p-2 bg-gray-200 rounded w-full"
                 />
               </td>
@@ -124,6 +126,7 @@ const BudgetCalculator = () => {
                   name="newDailyBudget"
                   value={budgetData.newDailyBudget}
                   onChange={handleInputChange}
+                  step="100"
                   className="p-2 bg-gray-200 rounded w-full"
                 />
               </td>
