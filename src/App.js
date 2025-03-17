@@ -2,51 +2,56 @@ import React, { useState } from 'react';
 
 const BudgetCalculator = () => {
   const [budgetData, setBudgetData] = useState({
-    currentLifetimeBudget: "",
-    currentSpend: "",
+    currentLifetimeBudget: '',
+    currentSpend: '',
     currentEndDate: '',
-    currentDailyBudget: "",
-    newDailyBudget: "",
+    currentDailyBudget: '',
+    newDailyBudget: '',
     newEndDate: '',
-    newLifetimeBudget: 0,
-    changeInLTBudget: 0
+    newLifetimeBudget: '',
+    changeInLTBudget: ''
   });
 
-  const [countWeekdaysOnly, setCountWeekdaysOnly] = useState(true);
+  const [countWeekdaysOnly, setCountWeekdaysOnly] = useState(true); // Toggle for weekdays-only mode
 
-  const calculateWorkingDays = (startDate, endDate) => {
-    let count = 0;
-    let currentDate = new Date(startDate);
-
-    while (currentDate <= endDate) {
-      const dayOfWeek = currentDate.getDay();
-      if (!countWeekdaysOnly || (dayOfWeek !== 0 && dayOfWeek !== 6)) {
-        count++;
-      }
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    return count > 0 ? count : 1; // Prevent division by zero
-  };
-
-  const calculateValues = (data) => {
+  const calculateValues = (data, weekdaysOnly = countWeekdaysOnly) => {
     const updatedData = { ...data };
 
-    if (data.currentLifetimeBudget > 0 && data.currentSpend >= 0 && data.currentEndDate) {
+    const calculateWorkingDays = (startDate, endDate) => {
+      let count = 0;
+      let currentDate = new Date(startDate);
+
+      while (currentDate <= endDate) {
+        const dayOfWeek = currentDate.getDay();
+        if (!weekdaysOnly || (dayOfWeek !== 0 && dayOfWeek !== 6)) { // If counting all days, skip the check
+          count++;
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+
+      return count;
+    };
+
+    if (data.currentLifetimeBudget !== '' && data.currentSpend !== '' && data.currentEndDate !== '') {
       const currentDate = new Date();
       const endDate = new Date(data.currentEndDate);
       const daysRemaining = calculateWorkingDays(currentDate, endDate);
 
-      updatedData.currentDailyBudget = (data.currentLifetimeBudget - data.currentSpend) / daysRemaining;
-      updatedData.currentDailyBudget = parseFloat(updatedData.currentDailyBudget.toFixed(2));
+      if (daysRemaining > 0) {
+        updatedData.currentDailyBudget = (Number(data.currentLifetimeBudget) - Number(data.currentSpend)) / daysRemaining;
+        updatedData.currentDailyBudget = parseFloat(updatedData.currentDailyBudget.toFixed(2));
+      }
     }
 
-    if (data.currentSpend >= 0 && data.newDailyBudget > 0 && data.newEndDate) {
+    if (data.currentSpend !== '' && data.newDailyBudget !== '' && data.newEndDate !== '') {
       const currentDate = new Date();
       const endDate = new Date(data.newEndDate);
       const daysRemaining = calculateWorkingDays(currentDate, endDate);
 
-      updatedData.newLifetimeBudget = data.currentSpend + (data.newDailyBudget * daysRemaining);
-      updatedData.newLifetimeBudget = parseFloat(updatedData.newLifetimeBudget.toFixed(2));
+      if (daysRemaining > 0) {
+        updatedData.newLifetimeBudget = Number(data.currentSpend) + (Number(data.newDailyBudget) * daysRemaining);
+        updatedData.newLifetimeBudget = parseFloat(updatedData.newLifetimeBudget.toFixed(2));
+      }
     }
 
     if (data.currentLifetimeBudget > 0 && updatedData.newLifetimeBudget > 0) {
@@ -59,63 +64,125 @@ const BudgetCalculator = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const newValue = name.includes('EndDate') ? value : parseFloat(value) || 0;
+    const newValue = name === 'currentEndDate' || name === 'newEndDate' ? value : parseFloat(value) || '';
 
     const updatedData = { ...budgetData, [name]: newValue };
     setBudgetData(calculateValues(updatedData));
   };
 
+  const handleDateChange = (name, dateValue) => {
+    const formattedDate = formatDate(dateValue);
+    const updatedData = { ...budgetData, [name]: formattedDate };
+    setBudgetData(calculateValues(updatedData));
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+  };
+
+  const toInputDateFormat = (dateString) => {
+    if (!dateString) return '';
+    const parts = dateString.split('/');
+    if (parts.length !== 3) return '';
+    return `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
+  };
+
   const toggleCountMode = () => {
     setCountWeekdaysOnly((prev) => !prev);
-    setBudgetData(calculateValues(budgetData)); // Recalculate on toggle
+    setBudgetData(calculateValues(budgetData, !countWeekdaysOnly)); // Ensure recalculating based on new mode
   };
 
   return (
     <div className="container mx-auto p-6 max-w-7xl bg-white rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">Budget Calculator</h1>
+      <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">Daily & Lifetime Budget Calculator</h1>
 
-      {/* Toggle Button */}
-      <div className="flex justify-center mb-6">
-        <button 
+      <div className="flex justify-center mb-4">
+        <button
           onClick={toggleCountMode}
-          className={`px-6 py-3 border-2 rounded-md font-bold transition ${countWeekdaysOnly ? 'bg-gray-300 border-gray-600' : 'bg-gray-500 border-gray-700'}`}
+          className={`px-4 py-2 rounded text-white font-bold transition ${countWeekdaysOnly ? 'bg-blue-600' : 'bg-gray-600'}`}
         >
-          {countWeekdaysOnly ? 'Weekdays Only (Click for All Days)' : 'All Days (Click for Weekdays Only)'}
+          {countWeekdaysOnly ? 'Switch to All Days' : 'Switch to Weekdays Only'}
         </button>
       </div>
 
-      <table className="min-w-full border-collapse bg-gray-50 shadow-sm rounded-lg">
-        <thead>
-          <tr>
-            {['Current LT Budget', 'Current Spend', 'Current End Date', 'Current Daily Budget', 'New Daily Budget', 'New End Date', 'New LT Budget', 'Change in LT Budget']
-              .map((title, idx) => (
-                <th key={idx} className="bg-blue-600 text-white font-semibold p-4 border-b">{title}</th>
-              ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="text-center">
-            <td className="border p-4">
-              <input type="number" name="currentLifetimeBudget" value={budgetData.currentLifetimeBudget} onChange={handleInputChange} className="p-2 bg-gray-200 rounded w-full" />
-            </td>
-            <td className="border p-4">
-              <input type="number" name="currentSpend" value={budgetData.currentSpend} onChange={handleInputChange} className="p-2 bg-gray-200 rounded w-full" />
-            </td>
-            <td className="border p-4">
-              <input type="date" name="currentEndDate" value={budgetData.currentEndDate} onChange={handleInputChange} className="p-2 bg-gray-200 rounded w-full" />
-            </td>
-            <td className="border p-4 font-semibold">${budgetData.currentDailyBudget.toFixed(2)}</td>
-            <td className="border p-4">
-              <input type="number" name="newDailyBudget" value={budgetData.newDailyBudget} onChange={handleInputChange} className="p-2 bg-gray-200 rounded w-full" />
-            </td>
-            <td className="border p-4">
-              <input type="date" name="newEndDate" value={budgetData.newEndDate} onChange={handleInputChange} className="p-2 bg-gray-200 rounded w-full" />
-            </td>
-            <td className="border p-4 font-semibold">${budgetData.newLifetimeBudget.toFixed(2)}</td>
-            <td className="border p-4 font-semibold">{budgetData.changeInLTBudget.toFixed(2)}%</td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse bg-gray-50 shadow-sm rounded-lg">
+          <thead>
+            <tr>
+              <th className="bg-blue-600 text-white font-semibold p-4 border-b">Current Lifetime Budget</th>
+              <th className="bg-blue-600 text-white font-semibold p-4 border-b">Current Spend</th>
+              <th className="bg-blue-600 text-white font-semibold p-4 border-b">Current End Date</th>
+              <th className="bg-blue-600 text-white font-semibold p-4 border-b">Current Daily Budget</th>
+              <th className="bg-blue-600 text-white font-semibold p-4 border-b">New Daily Budget</th>
+              <th className="bg-blue-600 text-white font-semibold p-4 border-b">New End Date</th>
+              <th className="bg-blue-600 text-white font-semibold p-4 border-b">New Lifetime Budget</th>
+              <th className="bg-blue-600 text-white font-semibold p-4 border-b">Change in LT Budget</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="text-center">
+              <td className="border p-4">
+                <input
+                  type="number"
+                  name="currentLifetimeBudget"
+                  value={budgetData.currentLifetimeBudget}
+                  onChange={handleInputChange}
+                  className="p-2 bg-gray-200 rounded w-full"
+                  step="100"
+                />
+              </td>
+              <td className="border p-4">
+                <input
+                  type="number"
+                  name="currentSpend"
+                  value={budgetData.currentSpend}
+                  onChange={handleInputChange}
+                  className="p-2 bg-gray-200 rounded w-full"
+                  step="100"
+                />
+              </td>
+              <td className="border p-4">
+                <input
+                  type="date"
+                  name="currentEndDate"
+                  value={toInputDateFormat(budgetData.currentEndDate)}
+                  onChange={(e) => handleDateChange('currentEndDate', e.target.value)}
+                  className="p-2 bg-gray-200 rounded w-full"
+                />
+              </td>
+              <td className="border p-4 text-right font-semibold">
+                ${budgetData.currentDailyBudget.toFixed(2)}
+              </td>
+              <td className="border p-4">
+                <input
+                  type="number"
+                  name="newDailyBudget"
+                  value={budgetData.newDailyBudget}
+                  onChange={handleInputChange}
+                  className="p-2 bg-gray-200 rounded w-full"
+                  step="100"
+                />
+              </td>
+              <td className="border p-4">
+                <input
+                  type="date"
+                  name="newEndDate"
+                  value={toInputDateFormat(budgetData.newEndDate)}
+                  onChange={(e) => handleDateChange('newEndDate', e.target.value)}
+                  className="p-2 bg-gray-200 rounded w-full"
+                />
+              </td>
+              <td className="border p-4 text-right font-semibold">
+                ${budgetData.newLifetimeBudget.toFixed(2)}
+              </td>
+              <td className="border p-4 text-right font-semibold">
+                {budgetData.changeInLTBudget.toFixed(2)}%
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
