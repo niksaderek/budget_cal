@@ -23,7 +23,7 @@ const BudgetCalculator = () => {
 
       while (currentDate <= endDate) {
         const dayOfWeek = currentDate.getDay();
-        if (!countWeekdaysOnly || (dayOfWeek !== 0 && dayOfWeek !== 6)) { // If counting all days, skip check
+        if (!countWeekdaysOnly || (dayOfWeek !== 0 && dayOfWeek !== 6)) { // Only count weekdays if enabled
           count++;
         }
         currentDate.setDate(currentDate.getDate() + 1);
@@ -97,12 +97,13 @@ const BudgetCalculator = () => {
     <div className="container mx-auto p-6 max-w-7xl bg-white rounded-lg shadow-lg">
       <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">Daily & Lifetime Budget Calculator</h1>
       
-      <div className="flex justify-center mb-4">
+      {/* Toggle Button */}
+      <div className="flex justify-center mb-6">
         <button 
           onClick={toggleCountMode}
-          className={`px-4 py-2 rounded text-white font-bold transition ${countWeekdaysOnly ? 'bg-blue-600' : 'bg-gray-600'}`}
+          className={`px-6 py-3 border-2 rounded-md text-black font-bold transition ${countWeekdaysOnly ? 'bg-gray-300 border-gray-600' : 'bg-gray-500 border-gray-700'}`}
         >
-          {countWeekdaysOnly ? 'Switch to All Days' : 'Switch to Weekdays Only'}
+          {countWeekdaysOnly ? 'Weekdays Only (Click for All Days)' : 'All Days (Click for Weekdays Only)'}
         </button>
       </div>
 
@@ -152,7 +153,7 @@ const BudgetCalculator = () => {
                 />
               </td>
               <td className="border p-4 text-right font-semibold">
-                ${budgetData.currentDailyBudget.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                ${budgetData.currentDailyBudget.toFixed(2)}
               </td>
               <td className="border p-4">
                 <input
@@ -174,10 +175,10 @@ const BudgetCalculator = () => {
                 />
               </td>
               <td className="border p-4 text-right font-semibold">
-                ${budgetData.newLifetimeBudget.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                ${budgetData.newLifetimeBudget.toFixed(2)}
               </td>
               <td className="border p-4 text-right font-semibold">
-                {budgetData.changeInLTBudget.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%
+                {budgetData.changeInLTBudget.toFixed(2)}%
               </td>
             </tr>
           </tbody>
