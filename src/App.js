@@ -188,6 +188,45 @@ const BudgetCalculator = () => {
   const SaveTemplateModal = () => {
     if (!showSaveTemplateModal) return null;
     
+    const handleTemplateSave = () => {
+      if (!newTemplateName.trim()) {
+        alert("Please enter a template name");
+        return;
+      }
+      
+      if (!budgetData.currentLifetimeBudget) {
+        alert("Please enter at least a current lifetime budget");
+        return;
+      }
+      
+      // Create the template object
+      const newTemplate = {
+        id: Date.now().toString(), // ID as string to avoid potential comparison issues
+        name: newTemplateName,
+        data: {
+          currentLifetimeBudget: budgetData.currentLifetimeBudget,
+          currentSpend: budgetData.currentSpend || 0,
+          currentEndDate: budgetData.currentEndDate || '',
+          newDailyBudget: budgetData.newDailyBudget || ''
+        }
+      };
+      
+      // Add to custom templates
+      const updatedTemplates = [...customTemplates, newTemplate];
+      setCustomTemplates(updatedTemplates);
+      
+      // Save to localStorage
+      try {
+        localStorage.setItem('budgetCustomTemplates', JSON.stringify(updatedTemplates));
+      } catch (e) {
+        console.error("Error saving templates to localStorage", e);
+      }
+      
+      // Reset modal
+      setNewTemplateName('');
+      setShowSaveTemplateModal(false);
+    };
+    
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
@@ -202,17 +241,22 @@ const BudgetCalculator = () => {
               onChange={(e) => setNewTemplateName(e.target.value)}
               className="p-2 border border-gray-300 rounded w-full"
               placeholder="My Custom Template"
+              // Avoid auto-recalculation while typing
+              onKeyDown={(e) => e.stopPropagation()}
             />
           </div>
           <div className="flex justify-end gap-2">
             <button
-              onClick={() => setShowSaveTemplateModal(false)}
+              onClick={() => {
+                setNewTemplateName('');
+                setShowSaveTemplateModal(false);
+              }}
               className="px-4 py-2 text-sm bg-gray-100 text-gray-800 rounded hover:bg-gray-200"
             >
               Cancel
             </button>
             <button
-              onClick={saveCustomTemplate}
+              onClick={handleTemplateSave}
               className="px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
             >
               Save Template
@@ -444,7 +488,7 @@ const BudgetCalculator = () => {
           ))}
           
           {customTemplates.map((template, index) => (
-            <div key={`custom-${template.id}`} className="relative">
+            <div key={`custom-${template.id || index}`} className="relative inline-block">
               <button
                 onClick={() => applyTemplate(template, builtInTemplates.length + index)}
                 className={`px-3 py-1 text-xs rounded-full transition-colors ${
@@ -458,14 +502,12 @@ const BudgetCalculator = () => {
               <button
                 onClick={() => {
                   if (window.confirm(`Delete the template "${template.name}"?`)) {
-                    const newTemplates = [...customTemplates];
-                    newTemplates.splice(index, 1);
+                    const newTemplates = customTemplates.filter((_, i) => i !== index);
                     setCustomTemplates(newTemplates);
                     localStorage.setItem('budgetCustomTemplates', JSON.stringify(newTemplates));
                   }
                 }}
-                className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center text-xs hover:bg-red-600"
-                title="Delete template"
+                className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold hover:bg-red-600 z-10"
               >
                 ×
               </button>
