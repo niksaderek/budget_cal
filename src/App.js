@@ -43,18 +43,23 @@ const BudgetCalculator = () => {
     }
   }, [showSaveTemplateModal]);
   
-  // Add a specific number of weekdays to a date, not including the final day
+  // Add a specific number of weekdays to a date, including the last day
   function getFutureWeekdayDate(weekdays, startDate = null) {
     // Use the provided start date or today
     const date = startDate ? new Date(startDate) : new Date();
     let daysAdded = 0;
     
-    // If starting from a provided date, move to the next day
-    if (startDate) {
-      date.setDate(date.getDate() + 1);
+    // If we're using today as the start date, we'll count today as the first day
+    // If we're using an existing date, we'll start counting from the next day
+    if (!startDate || (startDate && weekdays > 0)) {
+      // For today or existing date with more days to add, count current/next day if it's a weekday
+      const currentDayOfWeek = date.getDay();
+      if (currentDayOfWeek !== 0 && currentDayOfWeek !== 6) {
+        daysAdded++;
+      }
     }
     
-    // Add days until we reach the desired number of weekdays
+    // Add remaining weekdays
     while (daysAdded < weekdays) {
       date.setDate(date.getDate() + 1);
       const dayOfWeek = date.getDay();
@@ -63,6 +68,9 @@ const BudgetCalculator = () => {
         daysAdded++;
       }
     }
+    
+    // Set time to end of day (23:59:59)
+    date.setHours(23, 59, 59, 999);
     
     return formatDateForInput(date);
   }
