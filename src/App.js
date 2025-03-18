@@ -404,6 +404,7 @@ const BudgetCalculator = () => {
           </button>
         </div>
         
+        {/* Combined built-in and custom templates */}
         <div className="flex flex-wrap gap-2 mb-2">
           {/* Built-in templates */}
           {builtInTemplates.map((template, index) => (
@@ -420,6 +421,35 @@ const BudgetCalculator = () => {
             </button>
           ))}
           
+          {/* Custom templates as separate buttons with trash icon */}
+          {customTemplates.map((template, index) => (
+            <div key={`custom-${index}`} className="inline-block">
+              <button
+                onClick={() => applyTemplate(template, builtInTemplates.length + index)}
+                className={`px-3 py-1 text-xs rounded-full transition-colors ${
+                  activeTemplate === (builtInTemplates.length + index)
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
+                }`}
+              >
+                {template.name}
+              </button>
+              {' '}{/* Literal space character */}
+              <button
+                onClick={() => {
+                  if (confirm(`Delete template "${template.name}"?`)) {
+                    const updatedTemplates = customTemplates.filter((_, i) => i !== index);
+                    setCustomTemplates(updatedTemplates);
+                    localStorage.setItem('budgetCustomTemplates', JSON.stringify(updatedTemplates));
+                  }
+                }}
+                className="px-2 py-1 text-xs bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+              >
+                🗑️
+              </button>
+            </div>
+          ))}
+          
           <button
             onClick={resetCalculator}
             className="px-3 py-1 text-xs rounded-full bg-gray-100 text-gray-800 hover:bg-gray-200 transition-colors"
@@ -427,33 +457,6 @@ const BudgetCalculator = () => {
             Reset
           </button>
         </div>
-        
-        {/* Custom templates */}
-        {customTemplates.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {customTemplates.map((template, index) => (
-              <div key={`custom-${index}`} className="flex rounded-full overflow-hidden">
-                <button
-                  onClick={() => applyTemplate(template, builtInTemplates.length + index)}
-                  className={`px-3 py-1 text-xs rounded-l-full transition-colors ${
-                    activeTemplate === (builtInTemplates.length + index)
-                      ? 'bg-blue-600 text-white' 
-                      : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
-                  }`}
-                >
-                  {template.name}
-                </button>
-                <button
-                  onClick={() => deleteTemplate(index)}
-                  className="flex items-center justify-center w-6 h-6 bg-red-500 text-white hover:bg-red-600 text-sm font-bold"
-                  style={{ opacity: 1, minWidth: '24px' }}
-                >
-                  ×
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Save Template Modal */}
