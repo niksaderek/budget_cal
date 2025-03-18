@@ -393,11 +393,11 @@ const BudgetCalculator = () => {
       
       {/* Templates */}
       <div className="mb-6">
-        <div className="flex justify-between items-center mb-2">
+        <div className="flex justify-between items-center mb-2" style={{ gap: '20px' }}>
           <h3 className="text-sm font-medium text-gray-700">Quick Templates:</h3>
           <button
             onClick={() => setShowSaveTemplateModal(true)}
-            className="px-3 py-1 text-xs rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+            className="px-3 py-1 text-xs rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors ml-4"
           >
             Save Current as Template
           </button>
