@@ -443,7 +443,8 @@ const BudgetCalculator = () => {
                 </button>
                 <button
                   onClick={() => deleteTemplate(index)}
-                  className="flex items-center justify-center w-6 h-6 bg-red-500 text-white hover:bg-red-600 text-xs font-bold"
+                  className="flex items-center justify-center w-6 h-6 bg-red-500 text-white hover:bg-red-600 text-sm font-bold"
+                  style={{ opacity: 1, minWidth: '24px' }}
                 >
                   ×
                 </button>
