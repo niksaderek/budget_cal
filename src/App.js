@@ -43,25 +43,24 @@ const BudgetCalculator = () => {
     }
   }, [showSaveTemplateModal]);
   
-  // Add a specific number of weekdays to a date
+  // Add a specific number of weekdays to a date, not including the final day
   function getFutureWeekdayDate(weekdays, startDate = null) {
     // Use the provided start date or today
     const date = startDate ? new Date(startDate) : new Date();
     let daysAdded = 0;
     
-    // Skip to next day immediately if starting from a given date
+    // If starting from a provided date, move to the next day
     if (startDate) {
       date.setDate(date.getDate() + 1);
     }
     
+    // Add days until we reach the desired number of weekdays
     while (daysAdded < weekdays) {
+      date.setDate(date.getDate() + 1);
       const dayOfWeek = date.getDay();
-      // Skip weekends (0 = Sunday, 6 = Saturday)
+      // Count only weekdays (Monday-Friday)
       if (dayOfWeek !== 0 && dayOfWeek !== 6) {
         daysAdded++;
-      }
-      if (daysAdded < weekdays) {
-        date.setDate(date.getDate() + 1);
       }
     }
     
@@ -390,7 +389,7 @@ const BudgetCalculator = () => {
   return (
     <div className="mx-auto p-4 rounded-lg shadow-lg" style={{ maxWidth: '500px', width: '100%', backgroundColor: '#f5f5f5' }}>
       <h1 className="text-2xl md:text-3xl font-bold text-center mb-2" style={{ color: '#2563EB' }}>Daily & Lifetime Budget Calculator</h1>
-      <p className="text-xs text-center mb-4 text-gray-500">(Weekdays Only)</p>
+      <p className="text-xs text-center mb-4 text-gray-500"></p>
       
       {/* Templates */}
       <div className="mb-6">
