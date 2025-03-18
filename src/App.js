@@ -21,14 +21,13 @@ const BudgetCalculator = () => {
   
   // Load saved templates from localStorage on component mount
   useEffect(() => {
-    const savedTemplates = localStorage.getItem('budgetCustomTemplates');
-    if (savedTemplates) {
-      try {
+    try {
+      const savedTemplates = localStorage.getItem('budgetCustomTemplates');
+      if (savedTemplates) {
         setCustomTemplates(JSON.parse(savedTemplates));
-      } catch (e) {
-        console.error("Error loading saved templates", e);
-        setCustomTemplates([]);
       }
+    } catch (e) {
+      console.error("Error loading saved templates", e);
     }
   }, []);
   
@@ -86,9 +85,6 @@ const BudgetCalculator = () => {
     }
   ];
   
-  // Combined templates (built-in + custom)
-  const allTemplates = [...builtInTemplates, ...customTemplates];
-  
   function getQuarterEndDate() {
     const date = new Date();
     const month = date.getMonth();
@@ -129,6 +125,29 @@ const BudgetCalculator = () => {
     }).format(value);
   }
   
+  // Calculate only weekdays between two dates
+  const calculateWeekdays = (startDate, endDate) => {
+    if (!startDate || !endDate) return 0;
+    
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    
+    // Validate dates
+    if (start > end) return 0;
+    
+    let count = 0;
+    let current = new Date(start);
+    
+    while (current <= end) {
+      const dayOfWeek = current.getDay();
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+        count++;
+      }
+      current.setDate(current.getDate() + 1);
+    }
+    return count;
+  };
+  
   // Save current configuration as a custom template
   const saveCustomTemplate = () => {
     if (!newTemplateName.trim()) {
@@ -141,9 +160,9 @@ const BudgetCalculator = () => {
       return;
     }
     
-    // Create the template object
+    // Create the template object with a unique ID
     const newTemplate = {
-      id: Date.now(), // Unique ID for the template
+      id: Date.now().toString(),
       name: newTemplateName,
       data: {
         currentLifetimeBudget: budgetData.currentLifetimeBudget,
@@ -169,125 +188,19 @@ const BudgetCalculator = () => {
     setShowSaveTemplateModal(false);
   };
   
-  // Delete custom template - keeping this function for reference but using inline deletion
-  const deleteCustomTemplate = (id) => {
-    console.log("Attempting to delete template with ID:", id);
-    const updatedTemplates = customTemplates.filter(template => template.id !== id);
-    console.log("Templates before:", customTemplates.length, "Templates after:", updatedTemplates.length);
-    setCustomTemplates(updatedTemplates);
-    
-    try {
-      localStorage.setItem('budgetCustomTemplates', JSON.stringify(updatedTemplates));
-      console.log("Templates saved to localStorage");
-    } catch (e) {
-      console.error("Error saving updated templates to localStorage", e);
-    }
-  };
-  
-  // Save template modal
-  const SaveTemplateModal = () => {
-    if (!showSaveTemplateModal) return null;
-    
-    const handleTemplateSave = () => {
-      if (!newTemplateName.trim()) {
-        alert("Please enter a template name");
-        return;
-      }
+  // Delete a custom template by index
+  const deleteTemplate = (index) => {
+    if (window.confirm("Are you sure you want to delete this template?")) {
+      const newTemplates = [...customTemplates];
+      newTemplates.splice(index, 1);
+      setCustomTemplates(newTemplates);
       
-      if (!budgetData.currentLifetimeBudget) {
-        alert("Please enter at least a current lifetime budget");
-        return;
-      }
-      
-      // Create the template object
-      const newTemplate = {
-        id: Date.now().toString(), // ID as string to avoid potential comparison issues
-        name: newTemplateName,
-        data: {
-          currentLifetimeBudget: budgetData.currentLifetimeBudget,
-          currentSpend: budgetData.currentSpend || 0,
-          currentEndDate: budgetData.currentEndDate || '',
-          newDailyBudget: budgetData.newDailyBudget || ''
-        }
-      };
-      
-      // Add to custom templates
-      const updatedTemplates = [...customTemplates, newTemplate];
-      setCustomTemplates(updatedTemplates);
-      
-      // Save to localStorage
       try {
-        localStorage.setItem('budgetCustomTemplates', JSON.stringify(updatedTemplates));
+        localStorage.setItem('budgetCustomTemplates', JSON.stringify(newTemplates));
       } catch (e) {
         console.error("Error saving templates to localStorage", e);
       }
-      
-      // Reset modal
-      setNewTemplateName('');
-      setShowSaveTemplateModal(false);
-    };
-    
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-          <h3 className="text-xl font-bold mb-4">Save Custom Template</h3>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Template Name
-            </label>
-            <input
-              type="text"
-              value={newTemplateName}
-              onChange={(e) => setNewTemplateName(e.target.value)}
-              className="p-2 border border-gray-300 rounded w-full"
-              placeholder="My Custom Template"
-              // Avoid auto-recalculation while typing
-              onKeyDown={(e) => e.stopPropagation()}
-            />
-          </div>
-          <div className="flex justify-end gap-2">
-            <button
-              onClick={() => {
-                setNewTemplateName('');
-                setShowSaveTemplateModal(false);
-              }}
-              className="px-4 py-2 text-sm bg-gray-100 text-gray-800 rounded hover:bg-gray-200"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleTemplateSave}
-              className="px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              Save Template
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-  
-  // Calculate only weekdays between two dates
-  const calculateWeekdays = (startDate, endDate) => {
-    if (!startDate || !endDate) return 0;
-    
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    
-    // Validate dates
-    if (start > end) return 0;
-    
-    let count = 0;
-    let current = new Date(start);
-    
-    while (current <= end) {
-      const dayOfWeek = current.getDay();
-      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-        count++;
-      }
-      current.setDate(current.getDate() + 1);
     }
-    return count;
   };
   
   // Validate input data
@@ -455,6 +368,50 @@ const BudgetCalculator = () => {
     return null;
   };
 
+  // Modal component for saving templates
+  const SaveTemplateModal = () => {
+    if (!showSaveTemplateModal) return null;
+    
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+          <h3 className="text-xl font-bold mb-4">Save Custom Template</h3>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Template Name
+            </label>
+            <input
+              type="text"
+              value={newTemplateName}
+              onChange={(e) => setNewTemplateName(e.target.value)}
+              className="p-2 border border-gray-300 rounded w-full"
+              placeholder="My Custom Template"
+              // Prevent event propagation to avoid recalculations during typing
+              onKeyDown={(e) => e.stopPropagation()}
+            />
+          </div>
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => {
+                setNewTemplateName('');
+                setShowSaveTemplateModal(false);
+              }}
+              className="px-4 py-2 text-sm bg-gray-100 text-gray-800 rounded hover:bg-gray-200"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={saveCustomTemplate}
+              className="px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Save Template
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="mx-auto p-4 rounded-lg shadow-lg" style={{ maxWidth: '500px', width: '100%', backgroundColor: '#f5f5f5' }}>
       <h1 className="text-2xl md:text-3xl font-bold text-center mb-2" style={{ color: '#2563EB' }}>Daily & Lifetime Budget Calculator</h1>
@@ -471,7 +428,9 @@ const BudgetCalculator = () => {
             Save Current as Template
           </button>
         </div>
+        
         <div className="flex flex-wrap gap-2">
+          {/* Built-in templates */}
           {builtInTemplates.map((template, index) => (
             <div key={`builtin-${index}`} className="relative">
               <button
@@ -487,8 +446,9 @@ const BudgetCalculator = () => {
             </div>
           ))}
           
+          {/* Custom templates */}
           {customTemplates.map((template, index) => (
-            <div key={`custom-${template.id || index}`} className="relative inline-block">
+            <div key={`custom-${index}`} className="relative" style={{ display: 'inline-block', marginRight: '8px', marginBottom: '8px' }}>
               <button
                 onClick={() => applyTemplate(template, builtInTemplates.length + index)}
                 className={`px-3 py-1 text-xs rounded-full transition-colors ${
@@ -500,14 +460,25 @@ const BudgetCalculator = () => {
                 {template.name}
               </button>
               <button
-                onClick={() => {
-                  if (window.confirm(`Delete the template "${template.name}"?`)) {
-                    const newTemplates = customTemplates.filter((_, i) => i !== index);
-                    setCustomTemplates(newTemplates);
-                    localStorage.setItem('budgetCustomTemplates', JSON.stringify(newTemplates));
-                  }
+                onClick={() => deleteTemplate(index)}
+                style={{
+                  position: 'absolute',
+                  top: '-8px',
+                  right: '-8px',
+                  width: '20px',
+                  height: '20px',
+                  borderRadius: '50%',
+                  backgroundColor: '#EF4444',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+                  zIndex: 10
                 }}
-                className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold hover:bg-red-600 z-10"
               >
                 ×
               </button>
