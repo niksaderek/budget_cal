@@ -448,10 +448,10 @@ const BudgetCalculator = () => {
           
           {/* Custom templates */}
           {customTemplates.map((template, index) => (
-            <div key={`custom-${index}`} className="relative" style={{ display: 'inline-block', marginRight: '8px', marginBottom: '8px' }}>
+            <div key={`custom-${index}`} style={{ display: 'inline-flex', alignItems: 'center', marginRight: '8px', marginBottom: '8px' }}>
               <button
                 onClick={() => applyTemplate(template, builtInTemplates.length + index)}
-                className={`px-3 py-1 text-xs rounded-full transition-colors ${
+                className={`px-3 py-1 text-xs rounded-l-full transition-colors ${
                   activeTemplate === (builtInTemplates.length + index)
                     ? 'bg-blue-600 text-white' 
                     : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
@@ -461,24 +461,8 @@ const BudgetCalculator = () => {
               </button>
               <button
                 onClick={() => deleteTemplate(index)}
-                style={{
-                  position: 'absolute',
-                  top: '-8px',
-                  right: '-8px',
-                  width: '20px',
-                  height: '20px',
-                  borderRadius: '50%',
-                  backgroundColor: '#EF4444',
-                  color: 'white',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
-                  zIndex: 10
-                }}
+                className="w-6 h-6 flex items-center justify-center bg-red-500 text-white rounded-r-full text-xs font-bold hover:bg-red-600"
+                title="Delete template"
               >
                 ×
               </button>
