@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 const BudgetCalculator = () => {
@@ -19,6 +19,9 @@ const BudgetCalculator = () => {
   const [showSaveTemplateModal, setShowSaveTemplateModal] = useState(false);
   const [newTemplateName, setNewTemplateName] = useState('');
   
+  // Reference to input element
+  const templateNameInputRef = useRef(null);
+  
   // Load saved templates from localStorage on component mount
   useEffect(() => {
     try {
@@ -30,6 +33,15 @@ const BudgetCalculator = () => {
       console.error("Error loading saved templates", e);
     }
   }, []);
+  
+  // Focus input when modal opens
+  useEffect(() => {
+    if (showSaveTemplateModal && templateNameInputRef.current) {
+      setTimeout(() => {
+        templateNameInputRef.current.focus();
+      }, 100);
+    }
+  }, [showSaveTemplateModal]);
   
   // Add a specific number of weekdays to the current date
   function getFutureWeekdayDate(weekdays) {
@@ -368,48 +380,9 @@ const BudgetCalculator = () => {
     return null;
   };
 
-  // Modal component for saving templates
-  const SaveTemplateModal = () => {
-    if (!showSaveTemplateModal) return null;
-    
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-          <h3 className="text-xl font-bold mb-4">Save Custom Template</h3>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Template Name
-            </label>
-            <input
-              type="text"
-              value={newTemplateName}
-              onChange={(e) => setNewTemplateName(e.target.value)}
-              className="p-2 border border-gray-300 rounded w-full"
-              placeholder="My Custom Template"
-              // Prevent event propagation to avoid recalculations during typing
-              onKeyDown={(e) => e.stopPropagation()}
-            />
-          </div>
-          <div className="flex justify-end gap-2">
-            <button
-              onClick={() => {
-                setNewTemplateName('');
-                setShowSaveTemplateModal(false);
-              }}
-              className="px-4 py-2 text-sm bg-gray-100 text-gray-800 rounded hover:bg-gray-200"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={saveCustomTemplate}
-              className="px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              Save Template
-            </button>
-          </div>
-        </div>
-      </div>
-    );
+  // Handle template name input change
+  const handleTemplateNameChange = (e) => {
+    setNewTemplateName(e.target.value);
   };
 
   return (
@@ -429,44 +402,20 @@ const BudgetCalculator = () => {
           </button>
         </div>
         
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mb-2">
           {/* Built-in templates */}
           {builtInTemplates.map((template, index) => (
-            <div key={`builtin-${index}`} className="relative">
-              <button
-                onClick={() => applyTemplate(template, index)}
-                className={`px-3 py-1 text-xs rounded-full transition-colors ${
-                  activeTemplate === index 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
-                }`}
-              >
-                {template.name}
-              </button>
-            </div>
-          ))}
-          
-          {/* Custom templates */}
-          {customTemplates.map((template, index) => (
-            <div key={`custom-${index}`} style={{ display: 'inline-flex', alignItems: 'center', marginRight: '8px', marginBottom: '8px' }}>
-              <button
-                onClick={() => applyTemplate(template, builtInTemplates.length + index)}
-                className={`px-3 py-1 text-xs rounded-l-full transition-colors ${
-                  activeTemplate === (builtInTemplates.length + index)
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
-                }`}
-              >
-                {template.name}
-              </button>
-              <button
-                onClick={() => deleteTemplate(index)}
-                className="w-6 h-6 flex items-center justify-center bg-red-500 text-white rounded-r-full text-xs font-bold hover:bg-red-600"
-                title="Delete template"
-              >
-                ×
-              </button>
-            </div>
+            <button
+              key={`builtin-${index}`}
+              onClick={() => applyTemplate(template, index)}
+              className={`px-3 py-1 text-xs rounded-full transition-colors ${
+                activeTemplate === index 
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
+              }`}
+            >
+              {template.name}
+            </button>
           ))}
           
           <button
@@ -476,10 +425,78 @@ const BudgetCalculator = () => {
             Reset
           </button>
         </div>
+        
+        {/* Custom templates */}
+        {customTemplates.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {customTemplates.map((template, index) => (
+              <div key={`custom-${index}`} className="flex rounded-full overflow-hidden">
+                <button
+                  onClick={() => applyTemplate(template, builtInTemplates.length + index)}
+                  className={`px-3 py-1 text-xs rounded-l-full transition-colors ${
+                    activeTemplate === (builtInTemplates.length + index)
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
+                  }`}
+                >
+                  {template.name}
+                </button>
+                <button
+                  onClick={() => deleteTemplate(index)}
+                  className="flex items-center justify-center w-6 h-6 bg-red-500 text-white hover:bg-red-600 text-xs font-bold"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Save Template Modal */}
-      <SaveTemplateModal />
+      {showSaveTemplateModal && (
+        <div 
+          className="fixed inset-0 flex items-center justify-center z-50"
+          style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+        >
+          <div 
+            className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl font-bold mb-4">Save Custom Template</h3>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Template Name
+              </label>
+              <input
+                type="text"
+                ref={templateNameInputRef}
+                value={newTemplateName}
+                onChange={handleTemplateNameChange}
+                className="p-2 border border-gray-300 rounded w-full"
+                placeholder="My Custom Template"
+              />
+            </div>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => {
+                  setNewTemplateName('');
+                  setShowSaveTemplateModal(false);
+                }}
+                className="px-4 py-2 text-sm bg-gray-100 text-gray-800 rounded hover:bg-gray-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={saveCustomTemplate}
+                className="px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Save Template
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="space-y-5">
         {/* Current Budget Section */}
