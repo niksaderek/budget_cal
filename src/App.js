@@ -555,7 +555,7 @@ const BudgetCalculator = () => {
           <div 
             className="bg-white rounded-lg shadow-xl w-full"
             style={{ 
-              maxWidth: '550px',
+              maxWidth: '450px',
               borderRadius: '12px',
               overflow: 'hidden'
             }}
@@ -563,7 +563,7 @@ const BudgetCalculator = () => {
             {/* Header */}
             <div style={{ 
               background: 'linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)',
-              padding: '20px'
+              padding: '15px 20px'
             }}>
               <h3 className="text-xl font-bold text-white">
                 Save Custom Template
@@ -571,9 +571,9 @@ const BudgetCalculator = () => {
             </div>
             
             {/* Content */}
-            <div style={{ padding: '30px' }}>
+            <div style={{ padding: '20px' }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '10px', fontSize: '16px' }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '16px' }}>
                   Template Name
                 </label>
                 <input
@@ -583,8 +583,8 @@ const BudgetCalculator = () => {
                   onChange={(e) => setNewTemplateName(e.target.value)}
                   style={{
                     width: '100%',
-                    padding: '12px',
-                    fontSize: '16px',
+                    padding: '10px',
+                    fontSize: '15px',
                     borderRadius: '6px',
                     border: '1px solid #ccc',
                     boxShadow: 'none',
@@ -596,8 +596,8 @@ const BudgetCalculator = () => {
             </div>
             
             {/* Footer */}
-            <div style={{ padding: '20px 30px 30px' }}>
-              <div className="flex" style={{ marginTop: '20px' }}>
+            <div style={{ padding: '10px 20px 20px' }}>
+              <div className="flex">
                 <button
                   onClick={() => {
                     setNewTemplateName('');
@@ -605,7 +605,7 @@ const BudgetCalculator = () => {
                   }}
                   style={{
                     marginRight: '20px',
-                    padding: '10px 25px',
+                    padding: '8px 20px',
                     borderRadius: '4px',
                     backgroundColor: '#f1f1f1',
                     fontSize: '14px',
@@ -654,7 +654,7 @@ const BudgetCalculator = () => {
                     setShowSaveTemplateModal(false);
                   }}
                   style={{ 
-                    padding: '10px 25px',
+                    padding: '8px 20px',
                     borderRadius: '4px',
                     backgroundColor: '#9C42F5',
                     color: 'white',
@@ -679,7 +679,7 @@ const BudgetCalculator = () => {
           <div 
             className="bg-white rounded-lg shadow-xl w-full"
             style={{ 
-              maxWidth: '550px',
+              maxWidth: '450px',
               borderRadius: '12px',
               overflow: 'hidden'
             }}
@@ -687,7 +687,7 @@ const BudgetCalculator = () => {
             {/* Header */}
             <div style={{ 
               background: 'linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)',
-              padding: '20px'
+              padding: '15px 20px'
             }}>
               <h3 className="text-xl font-bold text-white">
                 Delete Template
@@ -695,15 +695,15 @@ const BudgetCalculator = () => {
             </div>
             
             {/* Content */}
-            <div style={{ padding: '30px' }}>
+            <div style={{ padding: '20px' }}>
               <p style={{ fontSize: '16px', color: '#333' }}>
                 Are you sure you want to delete the template "{templateToDelete.name}"?
               </p>
             </div>
             
             {/* Footer */}
-            <div style={{ padding: '20px 30px 30px' }}>
-              <div className="flex" style={{ marginTop: '20px' }}>
+            <div style={{ padding: '10px 20px 20px' }}>
+              <div className="flex">
                 <button
                   onClick={() => {
                     setShowDeleteModal(false);
@@ -711,7 +711,7 @@ const BudgetCalculator = () => {
                   }}
                   style={{
                     marginRight: '20px',
-                    padding: '10px 25px',
+                    padding: '8px 20px',
                     borderRadius: '4px',
                     backgroundColor: '#f1f1f1',
                     fontSize: '14px',
@@ -729,7 +729,7 @@ const BudgetCalculator = () => {
                     setTemplateToDelete(null);
                   }}
                   style={{ 
-                    padding: '10px 25px',
+                    padding: '8px 20px',
                     borderRadius: '4px',
                     backgroundColor: '#f44336',
                     color: 'white',
