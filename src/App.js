@@ -445,7 +445,29 @@ const BudgetCalculator = () => {
 
   return (
     <div className="mx-auto p-4 rounded-lg shadow-lg" style={{ maxWidth: '500px', width: '100%', backgroundColor: '#f5f5f5' }}>
-      <h1 className="text-2xl md:text-3xl font-bold text-center mb-2" style={{ color: '#2563EB' }}>Daily & Lifetime Budget Calculator</h1>
+      <div className="flex items-center justify-center mb-2">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+          <path d="M7 19C10.866 19 14 15.866 14 12C14 8.13401 10.866 5 7 5C3.13401 5 0 8.13401 0 12C0 15.866 3.13401 19 7 19Z" fill="url(#paint0_linear)"/>
+          <path d="M21 5C17.134 5 14 8.13401 14 12V26C14 26.5523 14.4477 27 15 27H27C27.5523 27 28 26.5523 28 26V12C28 8.13401 24.866 5 21 5Z" fill="url(#paint1_linear)"/>
+          <defs>
+            <linearGradient id="paint0_linear" x1="0" y1="12" x2="14" y2="12" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#9C42F5"/>
+              <stop offset="1" stopColor="#4B8BF5"/>
+            </linearGradient>
+            <linearGradient id="paint1_linear" x1="14" y1="16" x2="28" y2="16" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#4B8BF5"/>
+              <stop offset="1" stopColor="#42E8F5"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <h1 className="text-2xl md:text-3xl font-bold text-center" style={{ 
+          background: "linear-gradient(90deg, #9C42F5 0%, #4B8BF5 50%, #42E8F5 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          color: "transparent"
+        }}>Budget Calculator</h1>
+      </div>
       <p className="text-xs text-center mb-4 text-gray-500"></p>
       
       {/* Templates */}
@@ -454,7 +476,11 @@ const BudgetCalculator = () => {
           <h3 className="text-sm font-medium text-gray-700">Quick Templates:</h3>
           <button
             onClick={() => setShowSaveTemplateModal(true)}
-            className="px-3 py-1 text-xs rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors ml-4"
+            className="px-3 py-1 text-xs rounded-full hover:bg-opacity-80 transition-colors ml-4"
+            style={{ 
+              background: "linear-gradient(90deg, #9C42F5 0%, #4B8BF5 50%, #42E8F5 100%)",
+              color: "white" 
+            }}
           >
             Save Current as Template
           </button>
@@ -566,8 +592,8 @@ const BudgetCalculator = () => {
 
       <div className="space-y-5">
         {/* Current Budget Section */}
-        <div className="p-4 rounded-lg shadow-sm" style={{ backgroundColor: '#EFF6FF' }}>
-          <h2 className="text-lg font-semibold mb-3" style={{ color: '#1E40AF' }}>Current Budget</h2>
+        <div className="p-4 rounded-lg shadow-sm" style={{ backgroundColor: 'rgba(156, 66, 245, 0.1)' }}>
+          <h2 className="text-lg font-semibold mb-3" style={{ color: '#9C42F5' }}>Current Budget</h2>
           
           <div className="space-y-3">
             <div className="flex flex-col">
@@ -626,7 +652,8 @@ const BudgetCalculator = () => {
                     const newDate = subtractWeekdaysFromDate(budgetData.currentEndDate, 5);
                     handleDateChange('currentEndDate', newDate);
                   }}
-                  className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded hover:bg-blue-100"
+                  className="text-xs px-2 py-1 rounded hover:bg-opacity-80"
+                  style={{ backgroundColor: 'rgba(156, 66, 245, 0.2)', color: '#9C42F5' }}
                 >
                   -5 Weekdays
                 </button>
@@ -635,7 +662,8 @@ const BudgetCalculator = () => {
                     const newDate = addWeekdaysToDate(budgetData.currentEndDate, 5);
                     handleDateChange('currentEndDate', newDate);
                   }}
-                  className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded hover:bg-blue-100"
+                  className="text-xs px-2 py-1 rounded hover:bg-opacity-80"
+                  style={{ backgroundColor: 'rgba(156, 66, 245, 0.2)', color: '#9C42F5' }}
                 >
                   +5 Weekdays
                 </button>
@@ -644,7 +672,7 @@ const BudgetCalculator = () => {
             
             <div className="flex flex-col">
               <label className="text-sm font-medium text-gray-600 mb-1">Current Daily Budget</label>
-              <div className="p-2 bg-white border border-gray-200 rounded w-full font-semibold" style={{ color: '#1E40AF' }}>
+              <div className="p-2 bg-white border border-gray-200 rounded w-full font-semibold" style={{ color: '#9C42F5' }}>
                 {formatCurrency(budgetData.currentDailyBudget)}
               </div>
             </div>
@@ -652,8 +680,8 @@ const BudgetCalculator = () => {
         </div>
         
         {/* New Budget Section */}
-        <div className="p-4 rounded-lg shadow-sm" style={{ backgroundColor: '#F0FDF4' }}>
-          <h2 className="text-lg font-semibold mb-3" style={{ color: '#166534' }}>New Budget</h2>
+        <div className="p-4 rounded-lg shadow-sm" style={{ backgroundColor: 'rgba(75, 139, 245, 0.1)' }}>
+          <h2 className="text-lg font-semibold mb-3" style={{ color: '#4B8BF5' }}>New Budget</h2>
           
           <div className="space-y-3">
             <div className="flex flex-col">
@@ -694,7 +722,8 @@ const BudgetCalculator = () => {
                     const newDate = subtractWeekdaysFromDate(budgetData.newEndDate, 5);
                     handleDateChange('newEndDate', newDate);
                   }}
-                  className="text-xs px-2 py-1 bg-green-50 text-green-700 rounded hover:bg-green-100"
+                  className="text-xs px-2 py-1 rounded hover:bg-opacity-80"
+                  style={{ backgroundColor: 'rgba(75, 139, 245, 0.2)', color: '#4B8BF5' }}
                 >
                   -5 Weekdays
                 </button>
@@ -703,7 +732,8 @@ const BudgetCalculator = () => {
                     const newDate = addWeekdaysToDate(budgetData.newEndDate, 5);
                     handleDateChange('newEndDate', newDate);
                   }}
-                  className="text-xs px-2 py-1 bg-green-50 text-green-700 rounded hover:bg-green-100"
+                  className="text-xs px-2 py-1 rounded hover:bg-opacity-80"
+                  style={{ backgroundColor: 'rgba(75, 139, 245, 0.2)', color: '#4B8BF5' }}
                 >
                   +5 Weekdays
                 </button>
@@ -712,7 +742,7 @@ const BudgetCalculator = () => {
             
             <div className="flex flex-col">
               <label className="text-sm font-medium text-gray-600 mb-1">New Lifetime Budget</label>
-              <div className="p-2 bg-white border border-gray-200 rounded w-full font-semibold" style={{ color: '#166534' }}>
+              <div className="p-2 bg-white border border-gray-200 rounded w-full font-semibold" style={{ color: '#4B8BF5' }}>
                 {formatCurrency(budgetData.newLifetimeBudget)}
               </div>
             </div>
@@ -720,8 +750,8 @@ const BudgetCalculator = () => {
         </div>
         
         {/* Results Section */}
-        <div className="p-4 rounded-lg shadow-sm" style={{ backgroundColor: '#F5F3FF' }}>
-          <h2 className="text-lg font-semibold mb-3" style={{ color: '#5B21B6' }}>Budget Change</h2>
+        <div className="p-4 rounded-lg shadow-sm" style={{ backgroundColor: 'rgba(66, 232, 245, 0.1)' }}>
+          <h2 className="text-lg font-semibold mb-3" style={{ color: '#42E8F5' }}>Budget Change</h2>
           
           <div className="flex flex-col">
             <label className="text-sm font-medium text-gray-600 mb-1">Change in Lifetime Budget</label>
@@ -730,7 +760,7 @@ const BudgetCalculator = () => {
               style={{ 
                 backgroundColor: 'white',
                 color: budgetData.changeInLTBudget > 0 ? '#DC2626' : 
-                       budgetData.changeInLTBudget < 0 ? '#16A34A' : 
+                       budgetData.changeInLTBudget < 0 ? '#42E8F5' : 
                        '#6B7280'
               }}
             >
