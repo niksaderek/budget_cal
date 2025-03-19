@@ -152,13 +152,25 @@ const BudgetCalculator = () => {
     
     const start = new Date(startDate);
     const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999); // Ensure end date is counted fully
     
     // Validate dates
     if (start > end) return 0;
     
+    // Reset time on start date to beginning of day for accurate comparison
+    start.setHours(0, 0, 0, 0);
+    
     let count = 0;
     let current = new Date(start);
     
+    // Count the current day if it's a weekday
+    const currentDayOfWeek = current.getDay();
+    if (currentDayOfWeek !== 0 && currentDayOfWeek !== 6) {
+      count++;
+    }
+    
+    // Count remaining days
+    current.setDate(current.getDate() + 1); // Move to next day
     while (current <= end) {
       const dayOfWeek = current.getDay();
       if (dayOfWeek !== 0 && dayOfWeek !== 6) {
@@ -166,6 +178,7 @@ const BudgetCalculator = () => {
       }
       current.setDate(current.getDate() + 1);
     }
+    
     return count;
   };
   
@@ -264,6 +277,7 @@ const BudgetCalculator = () => {
     
     if (data.currentLifetimeBudget && data.currentEndDate) {
       const endDate = new Date(data.currentEndDate);
+      endDate.setHours(23, 59, 59, 999); // Make sure it's end of day
       const daysRemaining = calculateWeekdays(today, endDate);
       
       updatedData.currentDailyBudget = daysRemaining > 0
@@ -273,6 +287,7 @@ const BudgetCalculator = () => {
 
     if (data.newDailyBudget && data.newEndDate) {
       const endDate = new Date(data.newEndDate);
+      endDate.setHours(23, 59, 59, 999); // Make sure it's end of day
       const daysRemaining = calculateWeekdays(today, endDate);
       
       updatedData.newLifetimeBudget = daysRemaining > 0
