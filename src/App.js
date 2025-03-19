@@ -94,6 +94,30 @@ const BudgetCalculator = () => {
     return formatDateForInput(newDate);
   }
   
+  // Subtract a specific number of weekdays from a date
+  function subtractWeekdaysFromDate(date, weekdays) {
+    if (!date) {
+      return formatDateForInput(new Date()); // Return today if no date
+    }
+    
+    const newDate = new Date(date);
+    let daysSubtracted = 0;
+    
+    // Subtract weekdays
+    while (daysSubtracted < weekdays) {
+      newDate.setDate(newDate.getDate() - 1);
+      const dayOfWeek = newDate.getDay();
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+        daysSubtracted++;
+      }
+    }
+    
+    // Set to end of day
+    newDate.setHours(23, 59, 59, 999);
+    
+    return formatDateForInput(newDate);
+  }
+  
   // Built-in templates for quick selection
   const builtInTemplates = [
     {
@@ -599,30 +623,21 @@ const BudgetCalculator = () => {
               <div className="flex gap-2 mt-1">
                 <button 
                   onClick={() => {
+                    const newDate = subtractWeekdaysFromDate(budgetData.currentEndDate, 5);
+                    handleDateChange('currentEndDate', newDate);
+                  }}
+                  className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded hover:bg-blue-100"
+                >
+                  -5 Weekdays
+                </button>
+                <button 
+                  onClick={() => {
                     const newDate = addWeekdaysToDate(budgetData.currentEndDate, 5);
                     handleDateChange('currentEndDate', newDate);
                   }}
                   className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded hover:bg-blue-100"
                 >
                   +5 Weekdays
-                </button>
-                <button 
-                  onClick={() => {
-                    const newDate = addWeekdaysToDate(budgetData.currentEndDate, 10);
-                    handleDateChange('currentEndDate', newDate);
-                  }}
-                  className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded hover:bg-blue-100"
-                >
-                  +10 Weekdays
-                </button>
-                <button 
-                  onClick={() => {
-                    const newDate = addWeekdaysToDate(budgetData.currentEndDate, 15);
-                    handleDateChange('currentEndDate', newDate);
-                  }}
-                  className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded hover:bg-blue-100"
-                >
-                  +15 Weekdays
                 </button>
               </div>
             </div>
@@ -676,30 +691,21 @@ const BudgetCalculator = () => {
               <div className="flex gap-2 mt-1">
                 <button 
                   onClick={() => {
+                    const newDate = subtractWeekdaysFromDate(budgetData.newEndDate, 5);
+                    handleDateChange('newEndDate', newDate);
+                  }}
+                  className="text-xs px-2 py-1 bg-green-50 text-green-700 rounded hover:bg-green-100"
+                >
+                  -5 Weekdays
+                </button>
+                <button 
+                  onClick={() => {
                     const newDate = addWeekdaysToDate(budgetData.newEndDate, 5);
                     handleDateChange('newEndDate', newDate);
                   }}
                   className="text-xs px-2 py-1 bg-green-50 text-green-700 rounded hover:bg-green-100"
                 >
                   +5 Weekdays
-                </button>
-                <button 
-                  onClick={() => {
-                    const newDate = addWeekdaysToDate(budgetData.newEndDate, 10);
-                    handleDateChange('newEndDate', newDate);
-                  }}
-                  className="text-xs px-2 py-1 bg-green-50 text-green-700 rounded hover:bg-green-100"
-                >
-                  +10 Weekdays
-                </button>
-                <button 
-                  onClick={() => {
-                    const newDate = addWeekdaysToDate(budgetData.newEndDate, 15);
-                    handleDateChange('newEndDate', newDate);
-                  }}
-                  className="text-xs px-2 py-1 bg-green-50 text-green-700 rounded hover:bg-green-100"
-                >
-                  +15 Weekdays
                 </button>
               </div>
             </div>
