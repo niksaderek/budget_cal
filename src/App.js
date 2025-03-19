@@ -446,15 +446,17 @@ const BudgetCalculator = () => {
   return (
     <div className="mx-auto p-4 rounded-lg shadow-lg" style={{ maxWidth: '500px', width: '100%', backgroundColor: '#f5f5f5' }}>
       <div className="flex items-center justify-center mb-2">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
-          <path d="M7 19C10.866 19 14 15.866 14 12C14 8.13401 10.866 5 7 5C3.13401 5 0 8.13401 0 12C0 15.866 3.13401 19 7 19Z" fill="url(#paint0_linear)"/>
-          <path d="M21 5C17.134 5 14 8.13401 14 12V26C14 26.5523 14.4477 27 15 27H27C27.5523 27 28 26.5523 28 26V12C28 8.13401 24.866 5 21 5Z" fill="url(#paint1_linear)"/>
+        <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+          {/* Circle */}
+          <path d="M30 60C41.0457 60 50 51.0457 50 40C50 28.9543 41.0457 20 30 20C18.9543 20 10 28.9543 10 40C10 51.0457 18.9543 60 30 60Z" fill="url(#paint0_linear)"/>
+          {/* Capsule/pill shape */}
+          <path d="M50 40C50 51.0457 58.9543 60 70 60C81.0457 60 90 51.0457 90 40C90 28.9543 81.0457 20 70 20C58.9543 20 50 28.9543 50 40Z" fill="url(#paint1_linear)"/>
           <defs>
-            <linearGradient id="paint0_linear" x1="0" y1="12" x2="14" y2="12" gradientUnits="userSpaceOnUse">
+            <linearGradient id="paint0_linear" x1="10" y1="40" x2="50" y2="40" gradientUnits="userSpaceOnUse">
               <stop stopColor="#9C42F5"/>
               <stop offset="1" stopColor="#4B8BF5"/>
             </linearGradient>
-            <linearGradient id="paint1_linear" x1="14" y1="16" x2="28" y2="16" gradientUnits="userSpaceOnUse">
+            <linearGradient id="paint1_linear" x1="50" y1="40" x2="90" y2="40" gradientUnits="userSpaceOnUse">
               <stop stopColor="#4B8BF5"/>
               <stop offset="1" stopColor="#42E8F5"/>
             </linearGradient>
@@ -680,8 +682,8 @@ const BudgetCalculator = () => {
         </div>
         
         {/* New Budget Section */}
-        <div className="p-4 rounded-lg shadow-sm" style={{ backgroundColor: 'rgba(75, 139, 245, 0.1)' }}>
-          <h2 className="text-lg font-semibold mb-3" style={{ color: '#4B8BF5' }}>New Budget</h2>
+        <div className="p-4 rounded-lg shadow-sm" style={{ backgroundColor: 'rgba(25, 118, 210, 0.15)' }}>
+          <h2 className="text-lg font-semibold mb-3" style={{ color: '#1976D2' }}>New Budget</h2>
           
           <div className="space-y-3">
             <div className="flex flex-col">
@@ -723,7 +725,7 @@ const BudgetCalculator = () => {
                     handleDateChange('newEndDate', newDate);
                   }}
                   className="text-xs px-2 py-1 rounded hover:bg-opacity-80"
-                  style={{ backgroundColor: 'rgba(75, 139, 245, 0.2)', color: '#4B8BF5' }}
+                  style={{ backgroundColor: 'rgba(25, 118, 210, 0.2)', color: '#1976D2' }}
                 >
                   -5 Weekdays
                 </button>
@@ -733,7 +735,7 @@ const BudgetCalculator = () => {
                     handleDateChange('newEndDate', newDate);
                   }}
                   className="text-xs px-2 py-1 rounded hover:bg-opacity-80"
-                  style={{ backgroundColor: 'rgba(75, 139, 245, 0.2)', color: '#4B8BF5' }}
+                  style={{ backgroundColor: 'rgba(25, 118, 210, 0.2)', color: '#1976D2' }}
                 >
                   +5 Weekdays
                 </button>
@@ -742,7 +744,7 @@ const BudgetCalculator = () => {
             
             <div className="flex flex-col">
               <label className="text-sm font-medium text-gray-600 mb-1">New Lifetime Budget</label>
-              <div className="p-2 bg-white border border-gray-200 rounded w-full font-semibold" style={{ color: '#4B8BF5' }}>
+              <div className="p-2 bg-white border border-gray-200 rounded w-full font-semibold" style={{ color: '#1976D2' }}>
                 {formatCurrency(budgetData.newLifetimeBudget)}
               </div>
             </div>
@@ -750,8 +752,8 @@ const BudgetCalculator = () => {
         </div>
         
         {/* Results Section */}
-        <div className="p-4 rounded-lg shadow-sm" style={{ backgroundColor: 'rgba(66, 232, 245, 0.1)' }}>
-          <h2 className="text-lg font-semibold mb-3" style={{ color: '#42E8F5' }}>Budget Change</h2>
+        <div className="p-4 rounded-lg shadow-sm" style={{ backgroundColor: 'rgba(75, 139, 245, 0.1)' }}>
+          <h2 className="text-lg font-semibold mb-3" style={{ color: '#4B8BF5' }}>Budget Change</h2>
           
           <div className="flex flex-col">
             <label className="text-sm font-medium text-gray-600 mb-1">Change in Lifetime Budget</label>
@@ -760,7 +762,7 @@ const BudgetCalculator = () => {
               style={{ 
                 backgroundColor: 'white',
                 color: budgetData.changeInLTBudget > 0 ? '#DC2626' : 
-                       budgetData.changeInLTBudget < 0 ? '#42E8F5' : 
+                       budgetData.changeInLTBudget < 0 ? '#4B8BF5' : 
                        '#6B7280'
               }}
             >
