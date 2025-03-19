@@ -816,17 +816,61 @@ const BudgetCalculator = () => {
             
             <div className="flex flex-col">
               <label className="text-sm font-medium text-gray-600 mb-1">Current Spend ($)</label>
-              <input
-                type="number"
-                name="currentSpend"
-                value={budgetData.currentSpend}
-                onChange={handleInputChange}
-                className={`p-2 bg-white border rounded w-full ${
-                  errors.currentSpend ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="Enter amount"
-                step="100"
-              />
+              <div className="flex">
+                <input
+                  type="number"
+                  name="currentSpend"
+                  value={budgetData.currentSpend}
+                  onChange={handleInputChange}
+                  className={`p-2 bg-white border rounded-l w-full ${
+                    errors.currentSpend ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Enter amount"
+                  step="100"
+                />
+                <div className="flex">
+                  <button 
+                    onClick={() => {
+                      const currentValue = Number(budgetData.currentSpend) || 0;
+                      handleInputChange({
+                        target: {
+                          name: 'currentSpend',
+                          value: currentValue - 100
+                        }
+                      });
+                    }}
+                    className="px-2 py-1 text-xs rounded-none hover:bg-opacity-80"
+                    style={{ 
+                      backgroundColor: 'rgba(156, 66, 245, 0.2)',
+                      color: '#9C42F5',
+                      borderTop: '1px solid #e5e7eb',
+                      borderBottom: '1px solid #e5e7eb'
+                    }}
+                  >
+                    -100
+                  </button>
+                  <button 
+                    onClick={() => {
+                      const currentValue = Number(budgetData.currentSpend) || 0;
+                      handleInputChange({
+                        target: {
+                          name: 'currentSpend',
+                          value: currentValue + 100
+                        }
+                      });
+                    }}
+                    className="px-2 py-1 text-xs rounded-r hover:bg-opacity-80"
+                    style={{ 
+                      backgroundColor: 'rgba(156, 66, 245, 0.2)',
+                      color: '#9C42F5',
+                      border: '1px solid #e5e7eb',
+                      borderLeft: 'none'
+                    }}
+                  >
+                    +100
+                  </button>
+                </div>
+              </div>
               {errors.currentSpend && (
                 <p className="text-red-500 text-xs mt-1">{errors.currentSpend}</p>
               )}
@@ -1023,18 +1067,18 @@ const BudgetCalculator = () => {
                   <XAxis dataKey="name" />
                   <YAxis tickFormatter={formatCurrencyCompact} />
                   <Tooltip content={renderTooltip} />
-                  <Bar name="Spent" dataKey="spent" stackId="a" fill="#9CA3AF" />
-                  <Bar name="Remaining" dataKey="remaining" stackId="a" fill="#3B82F6" />
+                  <Bar name="Spent" dataKey="spent" stackId="a" fill="#9C42F5" />
+                  <Bar name="Remaining" dataKey="remaining" stackId="a" fill="#4B8BF5" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
             <div className="flex justify-center gap-4 mt-2">
               <div className="flex items-center">
-                <div className="w-3 h-3 bg-gray-400 mr-1"></div>
+                <div className="w-3 h-3 mr-1" style={{ backgroundColor: '#9C42F5' }}></div>
                 <span className="text-xs">Spent</span>
               </div>
               <div className="flex items-center">
-                <div className="w-3 h-3 bg-blue-500 mr-1"></div>
+                <div className="w-3 h-3 mr-1" style={{ backgroundColor: '#4B8BF5' }}></div>
                 <span className="text-xs">Remaining</span>
               </div>
             </div>
