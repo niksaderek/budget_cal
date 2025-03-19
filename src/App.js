@@ -550,7 +550,7 @@ const BudgetCalculator = () => {
       {showSaveTemplateModal && (
         <div 
           className="fixed inset-0 flex items-center justify-center z-50"
-          style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
+          style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}
         >
           <div 
             className="bg-white rounded-lg shadow-xl w-full"
@@ -561,16 +561,19 @@ const BudgetCalculator = () => {
             }}
           >
             {/* Header */}
-            <div className="p-5" style={{ background: 'linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)' }}>
+            <div style={{ 
+              background: 'linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)',
+              padding: '20px'
+            }}>
               <h3 className="text-xl font-bold text-white">
                 Save Custom Template
               </h3>
             </div>
             
             {/* Content */}
-            <div className="p-6" style={{ minHeight: '100px' }}>
-              <div className="mb-6 mt-3">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+            <div style={{ padding: '30px' }}>
+              <div>
+                <label style={{ display: 'block', marginBottom: '10px', fontSize: '16px' }}>
                   Template Name
                 </label>
                 <input
@@ -578,72 +581,90 @@ const BudgetCalculator = () => {
                   ref={templateNameInputRef}
                   value={newTemplateName}
                   onChange={(e) => setNewTemplateName(e.target.value)}
-                  className="p-3 border border-gray-300 rounded-md w-full transition-all focus:border-blue-400 focus:ring-2 focus:ring-blue-200 focus:outline-none"
-                  style={{ height: '45px' }}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    fontSize: '16px',
+                    borderRadius: '6px',
+                    border: '1px solid #ccc',
+                    boxShadow: 'none',
+                    outline: 'none'
+                  }}
                   placeholder="My Custom Template"
                 />
               </div>
             </div>
             
             {/* Footer */}
-            <div className="px-6 py-5 bg-gray-50 flex">
-              <button
-                onClick={() => {
-                  setNewTemplateName('');
-                  setShowSaveTemplateModal(false);
-                }}
-                className="px-5 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
-                style={{ fontSize: '14px', marginRight: '24px' }}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => {
-                  if (!newTemplateName.trim()) {
-                    alert("Please enter a template name");
-                    return;
-                  }
-                  
-                  if (!budgetData.currentLifetimeBudget) {
-                    alert("Please enter at least a current lifetime budget");
-                    return;
-                  }
-                  
-                  // Create the template object with a unique ID
-                  const newTemplate = {
-                    id: Date.now().toString(),
-                    name: newTemplateName,
-                    data: {
-                      currentLifetimeBudget: budgetData.currentLifetimeBudget,
-                      currentSpend: budgetData.currentSpend || 0,
-                      currentEndDate: budgetData.currentEndDate || '',
-                      newDailyBudget: budgetData.newDailyBudget || ''
+            <div style={{ padding: '20px 30px 30px' }}>
+              <div className="flex" style={{ marginTop: '20px' }}>
+                <button
+                  onClick={() => {
+                    setNewTemplateName('');
+                    setShowSaveTemplateModal(false);
+                  }}
+                  style={{
+                    marginRight: '20px',
+                    padding: '10px 25px',
+                    borderRadius: '4px',
+                    backgroundColor: '#f1f1f1',
+                    fontSize: '14px',
+                    border: 'none'
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    if (!newTemplateName.trim()) {
+                      alert("Please enter a template name");
+                      return;
                     }
-                  };
-                  
-                  // Add to custom templates
-                  const updatedTemplates = [...customTemplates, newTemplate];
-                  setCustomTemplates(updatedTemplates);
-                  
-                  // Save to localStorage
-                  try {
-                    localStorage.setItem('budgetCustomTemplates', JSON.stringify(updatedTemplates));
-                  } catch (e) {
-                    console.error("Error saving templates to localStorage", e);
-                  }
-                  
-                  // Reset modal
-                  setNewTemplateName('');
-                  setShowSaveTemplateModal(false);
-                }}
-                className="px-5 py-2 text-white rounded-md hover:opacity-90 transition-colors"
-                style={{ 
-                  background: "linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)",
-                  fontSize: '14px'
-                }}
-              >
-                Save Template
-              </button>
+                    
+                    if (!budgetData.currentLifetimeBudget) {
+                      alert("Please enter at least a current lifetime budget");
+                      return;
+                    }
+                    
+                    // Create the template object with a unique ID
+                    const newTemplate = {
+                      id: Date.now().toString(),
+                      name: newTemplateName,
+                      data: {
+                        currentLifetimeBudget: budgetData.currentLifetimeBudget,
+                        currentSpend: budgetData.currentSpend || 0,
+                        currentEndDate: budgetData.currentEndDate || '',
+                        newDailyBudget: budgetData.newDailyBudget || ''
+                      }
+                    };
+                    
+                    // Add to custom templates
+                    const updatedTemplates = [...customTemplates, newTemplate];
+                    setCustomTemplates(updatedTemplates);
+                    
+                    // Save to localStorage
+                    try {
+                      localStorage.setItem('budgetCustomTemplates', JSON.stringify(updatedTemplates));
+                    } catch (e) {
+                      console.error("Error saving templates to localStorage", e);
+                    }
+                    
+                    // Reset modal
+                    setNewTemplateName('');
+                    setShowSaveTemplateModal(false);
+                  }}
+                  style={{ 
+                    padding: '10px 25px',
+                    borderRadius: '4px',
+                    backgroundColor: '#9C42F5',
+                    color: 'white',
+                    fontSize: '14px',
+                    border: 'none'
+                  }}
+                >
+                  Save Template
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -653,7 +674,7 @@ const BudgetCalculator = () => {
       {showDeleteModal && templateToDelete && (
         <div 
           className="fixed inset-0 flex items-center justify-center z-50"
-          style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
+          style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}
         >
           <div 
             className="bg-white rounded-lg shadow-xl w-full"
@@ -664,47 +685,61 @@ const BudgetCalculator = () => {
             }}
           >
             {/* Header */}
-            <div className="p-5" style={{ background: 'linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)' }}>
+            <div style={{ 
+              background: 'linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)',
+              padding: '20px'
+            }}>
               <h3 className="text-xl font-bold text-white">
                 Delete Template
               </h3>
             </div>
             
             {/* Content */}
-            <div className="p-6" style={{ minHeight: '100px' }}>
-              <p className="text-gray-700 text-lg mt-3">
+            <div style={{ padding: '30px' }}>
+              <p style={{ fontSize: '16px', color: '#333' }}>
                 Are you sure you want to delete the template "{templateToDelete.name}"?
               </p>
             </div>
             
             {/* Footer */}
-            <div className="px-6 py-5 bg-gray-50 flex">
-              <button
-                onClick={() => {
-                  setShowDeleteModal(false);
-                  setTemplateToDelete(null);
-                }}
-                className="px-5 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
-                style={{ fontSize: '14px', marginRight: '24px' }}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => {
-                  const updatedTemplates = customTemplates.filter((_, i) => i !== templateToDelete.index);
-                  setCustomTemplates(updatedTemplates);
-                  localStorage.setItem('budgetCustomTemplates', JSON.stringify(updatedTemplates));
-                  setShowDeleteModal(false);
-                  setTemplateToDelete(null);
-                }}
-                className="px-5 py-2 text-white rounded-md hover:opacity-90 transition-colors"
-                style={{ 
-                  backgroundColor: '#f44336',
-                  fontSize: '14px'
-                }}
-              >
-                Delete
-              </button>
+            <div style={{ padding: '20px 30px 30px' }}>
+              <div className="flex" style={{ marginTop: '20px' }}>
+                <button
+                  onClick={() => {
+                    setShowDeleteModal(false);
+                    setTemplateToDelete(null);
+                  }}
+                  style={{
+                    marginRight: '20px',
+                    padding: '10px 25px',
+                    borderRadius: '4px',
+                    backgroundColor: '#f1f1f1',
+                    fontSize: '14px',
+                    border: 'none'
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    const updatedTemplates = customTemplates.filter((_, i) => i !== templateToDelete.index);
+                    setCustomTemplates(updatedTemplates);
+                    localStorage.setItem('budgetCustomTemplates', JSON.stringify(updatedTemplates));
+                    setShowDeleteModal(false);
+                    setTemplateToDelete(null);
+                  }}
+                  style={{ 
+                    padding: '10px 25px',
+                    borderRadius: '4px',
+                    backgroundColor: '#f44336',
+                    color: 'white',
+                    fontSize: '14px',
+                    border: 'none'
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         </div>
