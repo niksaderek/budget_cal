@@ -19,6 +19,8 @@ const BudgetCalculator = () => {
   const [showSaveTemplateModal, setShowSaveTemplateModal] = useState(false);
   const [newTemplateName, setNewTemplateName] = useState('');
   
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [templateToDelete, setTemplateToDelete] = useState(null);
   // Reference to input element
   const templateNameInputRef = useRef(null);
   
@@ -521,11 +523,8 @@ const BudgetCalculator = () => {
               {' '}{/* Literal space character */}
               <button
                 onClick={() => {
-                  if (confirm(`Delete template "${template.name}"?`)) {
-                    const updatedTemplates = customTemplates.filter((_, i) => i !== index);
-                    setCustomTemplates(updatedTemplates);
-                    localStorage.setItem('budgetCustomTemplates', JSON.stringify(updatedTemplates));
-                  }
+                  setTemplateToDelete({ index, name: template.name });
+                  setShowDeleteModal(true);
                 }}
                 className="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800 hover:bg-red-200 transition-colors ml-2"
                 title="Delete template"
@@ -547,8 +546,8 @@ const BudgetCalculator = () => {
         </div>
       </div>
 
-      {/* Save Template Modal */}
-      {showSaveTemplateModal && (
+      {/* Delete Template Modal */}
+      {showDeleteModal && templateToDelete && (
         <div 
           className="fixed inset-0 flex items-center justify-center z-50"
           style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
@@ -557,35 +556,40 @@ const BudgetCalculator = () => {
             className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-xl font-bold mb-4">Save Custom Template</h3>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Template Name
-              </label>
-              <input
-                type="text"
-                ref={templateNameInputRef}
-                value={newTemplateName}
-                onChange={handleTemplateNameChange}
-                className="p-2 border border-gray-300 rounded w-full"
-                placeholder="My Custom Template"
-              />
-            </div>
+            <h3 className="text-xl font-bold mb-4" style={{ 
+              background: "linear-gradient(90deg, #9C42F5 0%, #4B8BF5 50%, #42E8F5 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              color: "transparent"
+            }}>Delete Template</h3>
+            <p className="mb-4">
+              Are you sure you want to delete the template "{templateToDelete.name}"?
+            </p>
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => {
-                  setNewTemplateName('');
-                  setShowSaveTemplateModal(false);
+                  setShowDeleteModal(false);
+                  setTemplateToDelete(null);
                 }}
-                className="px-4 py-2 text-sm bg-gray-100 text-gray-800 rounded hover:bg-gray-200"
+                className="px-4 py-2 text-sm bg-gray-100 text-gray-800 rounded hover:bg-gray-200 transition-colors"
               >
                 Cancel
               </button>
               <button
-                onClick={saveCustomTemplate}
-                className="px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
+                onClick={() => {
+                  const updatedTemplates = customTemplates.filter((_, i) => i !== templateToDelete.index);
+                  setCustomTemplates(updatedTemplates);
+                  localStorage.setItem('budgetCustomTemplates', JSON.stringify(updatedTemplates));
+                  setShowDeleteModal(false);
+                  setTemplateToDelete(null);
+                }}
+                className="px-4 py-2 text-sm rounded text-white transition-colors"
+                style={{ 
+                  backgroundColor: '#f44336'
+                }}
               >
-                Save Template
+                Delete
               </button>
             </div>
           </div>
