@@ -555,21 +555,21 @@ const BudgetCalculator = () => {
           <div 
             className="bg-white rounded-lg shadow-xl w-full"
             style={{ 
-              maxWidth: '450px',
+              maxWidth: '550px',
               borderRadius: '12px',
               overflow: 'hidden'
             }}
           >
             {/* Header */}
-            <div className="p-4" style={{ background: 'linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)' }}>
+            <div className="p-5" style={{ background: 'linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)' }}>
               <h3 className="text-xl font-bold text-white">
                 Save Custom Template
               </h3>
             </div>
             
             {/* Content */}
-            <div className="p-6">
-              <div className="mb-6">
+            <div className="p-6" style={{ minHeight: '100px' }}>
+              <div className="mb-6 mt-3">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Template Name
                 </label>
@@ -586,13 +586,13 @@ const BudgetCalculator = () => {
             </div>
             
             {/* Footer */}
-            <div className="px-6 py-4 bg-gray-50 flex justify-end gap-3">
+            <div className="px-6 py-5 bg-gray-50 flex justify-start gap-6">
               <button
                 onClick={() => {
                   setNewTemplateName('');
                   setShowSaveTemplateModal(false);
                 }}
-                className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
+                className="px-5 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
                 style={{ fontSize: '14px' }}
               >
                 Cancel
@@ -636,7 +636,7 @@ const BudgetCalculator = () => {
                   setNewTemplateName('');
                   setShowSaveTemplateModal(false);
                 }}
-                className="px-4 py-2 text-white rounded-md hover:opacity-90 transition-colors"
+                className="px-5 py-2 text-white rounded-md hover:opacity-90 transition-colors"
                 style={{ 
                   background: "linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)",
                   fontSize: '14px'
@@ -658,33 +658,33 @@ const BudgetCalculator = () => {
           <div 
             className="bg-white rounded-lg shadow-xl w-full"
             style={{ 
-              maxWidth: '450px',
+              maxWidth: '550px',
               borderRadius: '12px',
               overflow: 'hidden'
             }}
           >
             {/* Header */}
-            <div className="p-4" style={{ background: 'linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)' }}>
+            <div className="p-5" style={{ background: 'linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)' }}>
               <h3 className="text-xl font-bold text-white">
                 Delete Template
               </h3>
             </div>
             
             {/* Content */}
-            <div className="p-6">
-              <p className="text-gray-700">
+            <div className="p-6" style={{ minHeight: '100px' }}>
+              <p className="text-gray-700 text-lg mt-3">
                 Are you sure you want to delete the template "{templateToDelete.name}"?
               </p>
             </div>
             
             {/* Footer */}
-            <div className="px-6 py-4 bg-gray-50 flex justify-end gap-3">
+            <div className="px-6 py-5 bg-gray-50 flex justify-start gap-6">
               <button
                 onClick={() => {
                   setShowDeleteModal(false);
                   setTemplateToDelete(null);
                 }}
-                className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
+                className="px-5 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
                 style={{ fontSize: '14px' }}
               >
                 Cancel
@@ -697,7 +697,7 @@ const BudgetCalculator = () => {
                   setShowDeleteModal(false);
                   setTemplateToDelete(null);
                 }}
-                className="px-4 py-2 text-white rounded-md hover:opacity-90 transition-colors"
+                className="px-5 py-2 text-white rounded-md hover:opacity-90 transition-colors"
                 style={{ 
                   backgroundColor: '#f44336',
                   fontSize: '14px'
