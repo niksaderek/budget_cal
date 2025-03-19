@@ -480,10 +480,11 @@ const BudgetCalculator = () => {
           <h3 className="text-sm font-medium text-gray-700">Quick Templates:</h3>
           <button
             onClick={() => setShowSaveTemplateModal(true)}
-            className="px-3 py-1 text-xs rounded-full text-white transition-colors ml-4"
+            className="text-xs rounded-full text-white transition-colors ml-4"
             style={{ 
               background: "linear-gradient(90deg, #9C42F5 0%, #4B8BF5 50%, #42E8F5 100%)",
-              padding: '8px 16px'
+              padding: '6px 12px',
+              fontSize: '12px'
             }}
           >
             Save Current as Template
