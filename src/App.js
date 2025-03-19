@@ -550,60 +550,50 @@ const BudgetCalculator = () => {
       {showSaveTemplateModal && (
         <div 
           className="fixed inset-0 flex items-center justify-center z-50"
-          style={{ backgroundColor: 'rgba(0,0,0,0.1)' }}
+          style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
         >
           <div 
-            className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full"
+            className="bg-white rounded-lg shadow-xl w-full"
             style={{ 
-              border: '1px solid #e5e7eb',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-              maxWidth: '600px'
+              maxWidth: '450px',
+              borderRadius: '12px',
+              overflow: 'hidden'
             }}
           >
-            <h3 
-              className="text-xl font-bold mb-6" 
-              style={{ 
-                color: '#9C42F5',
-                fontSize: '1.3rem'
-              }}
-            >
-              Save Custom Template
-            </h3>
-            
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Template Name
-              </label>
-              <input
-                type="text"
-                ref={templateNameInputRef}
-                value={newTemplateName}
-                onChange={(e) => setNewTemplateName(e.target.value)}
-                className="p-3 border border-gray-300 rounded w-full"
-                style={{
-                  height: '50px',
-                  fontSize: '1rem',
-                  border: '1px solid #9C42F5',
-                  borderRadius: '4px'
-                }}
-                placeholder="My Custom Template"
-              />
+            {/* Header */}
+            <div className="p-4" style={{ background: 'linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)' }}>
+              <h3 className="text-xl font-bold text-white">
+                Save Custom Template
+              </h3>
             </div>
             
-            <div className="flex justify-start gap-3 mt-4">
+            {/* Content */}
+            <div className="p-6">
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Template Name
+                </label>
+                <input
+                  type="text"
+                  ref={templateNameInputRef}
+                  value={newTemplateName}
+                  onChange={(e) => setNewTemplateName(e.target.value)}
+                  className="p-3 border border-gray-300 rounded-md w-full transition-all focus:border-blue-400 focus:ring-2 focus:ring-blue-200 focus:outline-none"
+                  style={{ height: '45px' }}
+                  placeholder="My Custom Template"
+                />
+              </div>
+            </div>
+            
+            {/* Footer */}
+            <div className="px-6 py-4 bg-gray-50 flex justify-end gap-3">
               <button
                 onClick={() => {
                   setNewTemplateName('');
                   setShowSaveTemplateModal(false);
                 }}
-                className="px-4 py-2"
-                style={{
-                  fontSize: '0.95rem',
-                  color: '#444',
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
+                style={{ fontSize: '14px' }}
               >
                 Cancel
               </button>
@@ -646,13 +636,10 @@ const BudgetCalculator = () => {
                   setNewTemplateName('');
                   setShowSaveTemplateModal(false);
                 }}
-                className="px-4 py-2 text-sm text-white rounded"
+                className="px-4 py-2 text-white rounded-md hover:opacity-90 transition-colors"
                 style={{ 
                   background: "linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)",
-                  padding: '8px 16px',
-                  fontWeight: '500',
-                  fontSize: '0.95rem',
-                  borderRadius: '4px'
+                  fontSize: '14px'
                 }}
               >
                 Save Template
@@ -666,44 +653,39 @@ const BudgetCalculator = () => {
       {showDeleteModal && templateToDelete && (
         <div 
           className="fixed inset-0 flex items-center justify-center z-50"
-          style={{ backgroundColor: 'rgba(0,0,0,0.1)' }}
+          style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
         >
           <div 
-            className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full"
+            className="bg-white rounded-lg shadow-xl w-full"
             style={{ 
-              border: '1px solid #e5e7eb',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-              maxWidth: '600px'
+              maxWidth: '450px',
+              borderRadius: '12px',
+              overflow: 'hidden'
             }}
           >
-            <h3 
-              className="text-xl font-bold mb-6" 
-              style={{ 
-                color: '#9C42F5',
-                fontSize: '1.3rem'
-              }}
-            >
-              Delete Template
-            </h3>
+            {/* Header */}
+            <div className="p-4" style={{ background: 'linear-gradient(90deg, #9C42F5 0%, #4B8BF5 100%)' }}>
+              <h3 className="text-xl font-bold text-white">
+                Delete Template
+              </h3>
+            </div>
             
-            <p className="mb-6" style={{ fontSize: '1rem' }}>
-              Are you sure you want to delete the template "{templateToDelete.name}"?
-            </p>
+            {/* Content */}
+            <div className="p-6">
+              <p className="text-gray-700">
+                Are you sure you want to delete the template "{templateToDelete.name}"?
+              </p>
+            </div>
             
-            <div className="flex justify-start gap-3 mt-4">
+            {/* Footer */}
+            <div className="px-6 py-4 bg-gray-50 flex justify-end gap-3">
               <button
                 onClick={() => {
                   setShowDeleteModal(false);
                   setTemplateToDelete(null);
                 }}
-                className="px-4 py-2"
-                style={{
-                  fontSize: '0.95rem',
-                  color: '#444',
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
+                style={{ fontSize: '14px' }}
               >
                 Cancel
               </button>
@@ -715,13 +697,10 @@ const BudgetCalculator = () => {
                   setShowDeleteModal(false);
                   setTemplateToDelete(null);
                 }}
-                className="px-4 py-2 text-sm text-white rounded"
+                className="px-4 py-2 text-white rounded-md hover:opacity-90 transition-colors"
                 style={{ 
                   backgroundColor: '#f44336',
-                  padding: '8px 16px',
-                  fontWeight: '500',
-                  fontSize: '0.95rem',
-                  borderRadius: '4px'
+                  fontSize: '14px'
                 }}
               >
                 Delete
