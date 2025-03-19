@@ -448,7 +448,7 @@ const BudgetCalculator = () => {
   return (
     <div className="mx-auto p-4 rounded-lg shadow-lg" style={{ maxWidth: '500px', width: '100%', backgroundColor: '#f5f5f5' }}>
       <div className="flex items-center justify-center mb-2">
-        <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+        <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
           {/* Circle */}
           <path d="M30 60C41.0457 60 50 51.0457 50 40C50 28.9543 41.0457 20 30 20C18.9543 20 10 28.9543 10 40C10 51.0457 18.9543 60 30 60Z" fill="url(#paint0_linear)"/>
           {/* Capsule/pill shape */}
@@ -754,17 +754,61 @@ const BudgetCalculator = () => {
           <div className="space-y-3">
             <div className="flex flex-col">
               <label className="text-sm font-medium text-gray-600 mb-1">Current Lifetime Budget ($)</label>
-              <input
-                type="number"
-                name="currentLifetimeBudget"
-                value={budgetData.currentLifetimeBudget}
-                onChange={handleInputChange}
-                className={`p-2 bg-white border rounded w-full ${
-                  errors.currentLifetimeBudget ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="Enter amount"
-                step="100"
-              />
+              <div className="flex">
+                <input
+                  type="number"
+                  name="currentLifetimeBudget"
+                  value={budgetData.currentLifetimeBudget}
+                  onChange={handleInputChange}
+                  className={`p-2 bg-white border rounded-l w-full ${
+                    errors.currentLifetimeBudget ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Enter amount"
+                  step="100"
+                />
+                <div className="flex">
+                  <button 
+                    onClick={() => {
+                      const currentValue = Number(budgetData.currentLifetimeBudget) || 0;
+                      handleInputChange({
+                        target: {
+                          name: 'currentLifetimeBudget',
+                          value: currentValue - 100
+                        }
+                      });
+                    }}
+                    className="px-2 py-1 text-xs rounded-none hover:bg-opacity-80"
+                    style={{ 
+                      backgroundColor: 'rgba(156, 66, 245, 0.2)',
+                      color: '#9C42F5',
+                      borderTop: '1px solid #e5e7eb',
+                      borderBottom: '1px solid #e5e7eb'
+                    }}
+                  >
+                    -100
+                  </button>
+                  <button 
+                    onClick={() => {
+                      const currentValue = Number(budgetData.currentLifetimeBudget) || 0;
+                      handleInputChange({
+                        target: {
+                          name: 'currentLifetimeBudget',
+                          value: currentValue + 100
+                        }
+                      });
+                    }}
+                    className="px-2 py-1 text-xs rounded-r hover:bg-opacity-80"
+                    style={{ 
+                      backgroundColor: 'rgba(156, 66, 245, 0.2)',
+                      color: '#9C42F5',
+                      border: '1px solid #e5e7eb',
+                      borderLeft: 'none'
+                    }}
+                  >
+                    +100
+                  </button>
+                </div>
+              </div>
               {errors.currentLifetimeBudget && (
                 <p className="text-red-500 text-xs mt-1">{errors.currentLifetimeBudget}</p>
               )}
@@ -842,17 +886,61 @@ const BudgetCalculator = () => {
           <div className="space-y-3">
             <div className="flex flex-col">
               <label className="text-sm font-medium text-gray-600 mb-1">New Daily Budget ($)</label>
-              <input
-                type="number"
-                name="newDailyBudget"
-                value={budgetData.newDailyBudget}
-                onChange={handleInputChange}
-                className={`p-2 bg-white border rounded w-full ${
-                  errors.newDailyBudget ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="Enter amount"
-                step="100"
-              />
+              <div className="flex">
+                <input
+                  type="number"
+                  name="newDailyBudget"
+                  value={budgetData.newDailyBudget}
+                  onChange={handleInputChange}
+                  className={`p-2 bg-white border rounded-l w-full ${
+                    errors.newDailyBudget ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Enter amount"
+                  step="100"
+                />
+                <div className="flex">
+                  <button 
+                    onClick={() => {
+                      const currentValue = Number(budgetData.newDailyBudget) || 0;
+                      handleInputChange({
+                        target: {
+                          name: 'newDailyBudget',
+                          value: currentValue - 100
+                        }
+                      });
+                    }}
+                    className="px-2 py-1 text-xs rounded-none hover:bg-opacity-80"
+                    style={{ 
+                      backgroundColor: 'rgba(25, 118, 210, 0.2)',
+                      color: '#1976D2',
+                      borderTop: '1px solid #e5e7eb',
+                      borderBottom: '1px solid #e5e7eb'
+                    }}
+                  >
+                    -100
+                  </button>
+                  <button 
+                    onClick={() => {
+                      const currentValue = Number(budgetData.newDailyBudget) || 0;
+                      handleInputChange({
+                        target: {
+                          name: 'newDailyBudget',
+                          value: currentValue + 100
+                        }
+                      });
+                    }}
+                    className="px-2 py-1 text-xs rounded-r hover:bg-opacity-80"
+                    style={{ 
+                      backgroundColor: 'rgba(25, 118, 210, 0.2)',
+                      color: '#1976D2',
+                      border: '1px solid #e5e7eb',
+                      borderLeft: 'none'
+                    }}
+                  >
+                    +100
+                  </button>
+                </div>
+              </div>
               {errors.newDailyBudget && (
                 <p className="text-red-500 text-xs mt-1">{errors.newDailyBudget}</p>
               )}
