@@ -43,36 +43,55 @@ const BudgetCalculator = () => {
     }
   }, [showSaveTemplateModal]);
   
-  // Add a specific number of weekdays to a date, including the last day
-  function getFutureWeekdayDate(weekdays, startDate = null) {
-    // Use the provided start date or today
-    const date = startDate ? new Date(startDate) : new Date();
+  // Add a specific number of weekdays from today
+  function getFutureWeekdayDate(weekdays) {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0); // Start at beginning of today
     let daysAdded = 0;
     
-    // If we're using today as the start date, we'll count today as the first day
-    // If we're using an existing date, we'll start counting from the next day
-    if (!startDate || (startDate && weekdays > 0)) {
-      // For today or existing date with more days to add, count current/next day if it's a weekday
-      const currentDayOfWeek = date.getDay();
-      if (currentDayOfWeek !== 0 && currentDayOfWeek !== 6) {
-        daysAdded++;
-      }
+    // Count today if it's a weekday
+    const todayDayOfWeek = date.getDay();
+    if (todayDayOfWeek !== 0 && todayDayOfWeek !== 6) {
+      daysAdded++;
     }
     
     // Add remaining weekdays
     while (daysAdded < weekdays) {
       date.setDate(date.getDate() + 1);
       const dayOfWeek = date.getDay();
-      // Count only weekdays (Monday-Friday)
       if (dayOfWeek !== 0 && dayOfWeek !== 6) {
         daysAdded++;
       }
     }
     
-    // Set time to end of day (23:59:59)
+    // Set to end of day
     date.setHours(23, 59, 59, 999);
     
     return formatDateForInput(date);
+  }
+  
+  // Add specific number of weekdays to an existing date
+  function addWeekdaysToDate(date, weekdays) {
+    if (!date) {
+      return getFutureWeekdayDate(weekdays);
+    }
+    
+    const newDate = new Date(date);
+    let daysAdded = 0;
+    
+    // Start counting from the current date
+    while (daysAdded < weekdays) {
+      newDate.setDate(newDate.getDate() + 1);
+      const dayOfWeek = newDate.getDay();
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+        daysAdded++;
+      }
+    }
+    
+    // Set to end of day
+    newDate.setHours(23, 59, 59, 999);
+    
+    return formatDateForInput(newDate);
   }
   
   // Built-in templates for quick selection
@@ -331,15 +350,6 @@ const BudgetCalculator = () => {
       newEndDate: template.data.currentEndDate // Copy current end date to new end date
     };
     
-    // Calculate daily budget immediately to ensure it's displayed properly
-    const today = new Date();
-    const endDate = new Date(template.data.currentEndDate);
-    const daysRemaining = calculateWeekdays(today, endDate);
-    
-    if (daysRemaining > 0) {
-      newData.currentDailyBudget = (Number(template.data.currentLifetimeBudget) - Number(template.data.currentSpend)) / daysRemaining;
-    }
-    
     setBudgetData(calculateValues(newData));
   };
   
@@ -465,14 +475,12 @@ const BudgetCalculator = () => {
                     localStorage.setItem('budgetCustomTemplates', JSON.stringify(updatedTemplates));
                   }
                 }}
-                className="px-2 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200"
-                style={{ marginLeft: '4px', display: 'inline-flex', alignItems: 'center' }}
+                className="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800 hover:bg-red-200 transition-colors ml-2"
+                title="Delete template"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block' }}>
                   <polyline points="3 6 5 6 21 6"></polyline>
                   <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                  <line x1="10" y1="11" x2="10" y2="17"></line>
-                  <line x1="14" y1="11" x2="14" y2="17"></line>
                 </svg>
               </button>
             </div>
@@ -590,19 +598,28 @@ const BudgetCalculator = () => {
               )}
               <div className="flex gap-2 mt-1">
                 <button 
-                  onClick={() => handleDateChange('currentEndDate', getFutureWeekdayDate(5, budgetData.currentEndDate || null))}
+                  onClick={() => {
+                    const newDate = addWeekdaysToDate(budgetData.currentEndDate, 5);
+                    handleDateChange('currentEndDate', newDate);
+                  }}
                   className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded hover:bg-blue-100"
                 >
                   +5 Weekdays
                 </button>
                 <button 
-                  onClick={() => handleDateChange('currentEndDate', getFutureWeekdayDate(10, budgetData.currentEndDate || null))}
+                  onClick={() => {
+                    const newDate = addWeekdaysToDate(budgetData.currentEndDate, 10);
+                    handleDateChange('currentEndDate', newDate);
+                  }}
                   className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded hover:bg-blue-100"
                 >
                   +10 Weekdays
                 </button>
                 <button 
-                  onClick={() => handleDateChange('currentEndDate', getFutureWeekdayDate(15, budgetData.currentEndDate || null))}
+                  onClick={() => {
+                    const newDate = addWeekdaysToDate(budgetData.currentEndDate, 15);
+                    handleDateChange('currentEndDate', newDate);
+                  }}
                   className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded hover:bg-blue-100"
                 >
                   +15 Weekdays
@@ -658,19 +675,28 @@ const BudgetCalculator = () => {
               )}
               <div className="flex gap-2 mt-1">
                 <button 
-                  onClick={() => handleDateChange('newEndDate', getFutureWeekdayDate(5, budgetData.newEndDate || null))}
+                  onClick={() => {
+                    const newDate = addWeekdaysToDate(budgetData.newEndDate, 5);
+                    handleDateChange('newEndDate', newDate);
+                  }}
                   className="text-xs px-2 py-1 bg-green-50 text-green-700 rounded hover:bg-green-100"
                 >
                   +5 Weekdays
                 </button>
                 <button 
-                  onClick={() => handleDateChange('newEndDate', getFutureWeekdayDate(10, budgetData.newEndDate || null))}
+                  onClick={() => {
+                    const newDate = addWeekdaysToDate(budgetData.newEndDate, 10);
+                    handleDateChange('newEndDate', newDate);
+                  }}
                   className="text-xs px-2 py-1 bg-green-50 text-green-700 rounded hover:bg-green-100"
                 >
                   +10 Weekdays
                 </button>
                 <button 
-                  onClick={() => handleDateChange('newEndDate', getFutureWeekdayDate(15, budgetData.newEndDate || null))}
+                  onClick={() => {
+                    const newDate = addWeekdaysToDate(budgetData.newEndDate, 15);
+                    handleDateChange('newEndDate', newDate);
+                  }}
                   className="text-xs px-2 py-1 bg-green-50 text-green-700 rounded hover:bg-green-100"
                 >
                   +15 Weekdays
