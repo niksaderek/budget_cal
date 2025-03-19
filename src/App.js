@@ -586,14 +586,14 @@ const BudgetCalculator = () => {
             </div>
             
             {/* Footer */}
-            <div className="px-6 py-5 bg-gray-50 flex justify-start gap-6">
+            <div className="px-6 py-5 bg-gray-50 flex">
               <button
                 onClick={() => {
                   setNewTemplateName('');
                   setShowSaveTemplateModal(false);
                 }}
                 className="px-5 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
-                style={{ fontSize: '14px' }}
+                style={{ fontSize: '14px', marginRight: '24px' }}
               >
                 Cancel
               </button>
@@ -678,14 +678,14 @@ const BudgetCalculator = () => {
             </div>
             
             {/* Footer */}
-            <div className="px-6 py-5 bg-gray-50 flex justify-start gap-6">
+            <div className="px-6 py-5 bg-gray-50 flex">
               <button
                 onClick={() => {
                   setShowDeleteModal(false);
                   setTemplateToDelete(null);
                 }}
                 className="px-5 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
-                style={{ fontSize: '14px' }}
+                style={{ fontSize: '14px', marginRight: '24px' }}
               >
                 Cancel
               </button>
